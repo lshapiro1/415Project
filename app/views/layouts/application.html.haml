@@ -1,5 +1,5 @@
 !!!
-%html
+%html{:lang => 'en'}
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Icqapp
@@ -7,6 +7,7 @@
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
+
   %body
     #flash
       %p.notice= flash[:notice] if flash[:notice]
@@ -14,6 +15,8 @@
       %p.alert= flash[:warning] if flash[:warning]
 
     #auth
-      =link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path
+      -if user_signed_in?
+        %p= "Hello, #{current_user.email}".
+        %p= link_to "Sign out", destroy_user_session_path, :method => :delete
 
     = yield
