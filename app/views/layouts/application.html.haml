@@ -11,5 +11,9 @@
     #flash
       %p.notice= flash[:notice] if flash[:notice]
       %p.alert= flash[:alert] if flash[:alert]
+      %p.alert= flash[:warning] if flash[:warning]
+
+    #auth
+      =link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path
 
     = yield
