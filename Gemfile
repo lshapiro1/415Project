@@ -21,6 +21,7 @@ gem 'haml'
 gem 'haml-rails'
 
 gem 'devise'
+gem 'omniauth-google-oauth2'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
