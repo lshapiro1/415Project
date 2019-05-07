@@ -1,0 +1,12 @@
+#main
+  %p= @course.name
+  %p= @course.daytime
+
+  %table
+    %tr
+      %th Name
+      %th Meeting times
+    -@course.questions do |q|
+      %tr
+        %td= q.question
+

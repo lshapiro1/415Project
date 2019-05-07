@@ -47,6 +47,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'factory_bot'
   gem 'capybara'
+  gem 'rails-controller-testing'
 end
 
 group :development do
