@@ -6,7 +6,6 @@ class CoursesController < ApplicationController
   def show
     begin
       @course = Course.find(params[:id])
-      @course.includes(:questions)
     rescue ActiveRecord::RecordNotFound
       flash[:warning] = "Invalid course"
       redirect_to courses_path and return

@@ -28,10 +28,18 @@ RSpec.describe CoursesController, type: :controller do
     
     it "doesn't redirect for signed in users" do
       sign_in FactoryBot.create(:user)
+      c = Course.create!(:name => "One", :daytime => "MWF 9:20-10:10")
       get :show, :params => {:id => 1}
-      expect(Course).to receive(:find).with(1) { Course.new(:name=>"One", :daytime=>"TR 9:00-9:00")}
       expect(response).to have_http_status(:success)
+      expect(assigns(:course)).to eq(c)
     end 
+
+    it "should redirect to the course index for an invalid course id" do
+      sign_in FactoryBot.create(:user)
+      get :show, :params => {:id => 100}
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(courses_path)
+    end
   end
 
 end
