@@ -2,6 +2,16 @@ FactoryBot.define do
 
   factory :multi_choice_question do
     question { "What is the answer?" }
-    sequence :option { |n| "Option #{n}" }
+    transient do
+      option_count { 4 }
+    end
+
+    after(:create) do |question, evaluator|
+      create_list(:option,  evaluator.option_count, question: question)
+    end
+  end
+
+  factory :poll do
+    multi_choice_question
   end
 end
