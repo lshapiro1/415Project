@@ -1,2 +1,10 @@
-%h1 Courses#index
-%p Find me in app/views/courses/index.html.haml
+#main
+  %table
+    %tr
+      %th Name
+      %th Meeting times
+    -@courses.each do |c|
+      %tr
+        %td= c.name
+        %td= c.daytime
+
