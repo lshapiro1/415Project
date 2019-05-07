@@ -32,3 +32,16 @@ App flow
    1. Creation of new question, related to a given course
    2. Populating the question with any details, e.g., multiple choice options
    3. Making the question active (which should update student page)
+
+---
+
+# Next
+
+ 1. Add factories for new course populated with students
+ 2. For course show page for admin: show number students
+    * Link to questions for course
+ 3. For course show page for student: show currently active poll, if any
+ 4. For question index page for student: redirect to course show or course index
+ 5. For question index page for admin: show questions and polls, button to create new question, for each question button to make new poll
+ 6. For poll index page show each poll, number of responses, whether open/closed
+ 7. For poll show page, show response details
