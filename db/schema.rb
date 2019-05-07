@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_07_161443) do
+ActiveRecord::Schema.define(version: 2019_05_07_163009) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -24,6 +24,31 @@ ActiveRecord::Schema.define(version: 2019_05_07_161443) do
     t.integer "user_id", null: false
     t.index ["course_id", "user_id"], name: "index_courses_users_on_course_id_and_user_id"
     t.index ["user_id", "course_id"], name: "index_courses_users_on_user_id_and_course_id"
+  end
+
+  create_table "multi_choice_options", force: :cascade do |t|
+    t.string "value"
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_multi_choice_options_on_question_id"
+  end
+
+  create_table "poll_responses", force: :cascade do |t|
+    t.integer "user_id"
+    t.text "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_poll_responses_on_user_id"
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.boolean "isopen"
+    t.integer "round"
+    t.integer "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_polls_on_question_id"
   end
 
   create_table "questions", force: :cascade do |t|
