@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_194342) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
+    t.string "daytime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -21,6 +22,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_194342) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.string "uid"
     t.boolean "admin", default: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
