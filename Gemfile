@@ -46,6 +46,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov'
   gem 'factory_bot'
+  gem 'capybara'
 end
 
 group :development do
