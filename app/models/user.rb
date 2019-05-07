@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
 
+  has_and_belongs_to_many :courses
+
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first

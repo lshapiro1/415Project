@@ -2,6 +2,8 @@ class Course < ApplicationRecord
   validates :name, :presence => true
   validates :daytime, :presence => true, :format => { with: /[MTWRF]{2,3} \d{1,2}:\d{2}-\d{1,2}:\d{2}/ }
 
+  has_and_belongs_to_many :users
+
   def now?
     return false unless self.daytime =~ /([MTWRF]{2,3}) (\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})/
     dow = %w{Su M T W R F Sa}
