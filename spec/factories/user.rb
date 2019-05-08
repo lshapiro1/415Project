@@ -1,6 +1,10 @@
 FactoryBot.define do
-  factory :user do
-    email { "student@colgate.edu" }
+  sequence :email do |i|
+    "student#{i}@colgate.edu"
+  end
+
+  factory :user, aliases: [:student] do
+    email { generate(:email) }
     password { "password"} 
     admin { false }
     password_confirmation { "password" }
