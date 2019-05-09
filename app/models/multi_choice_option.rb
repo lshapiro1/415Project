@@ -1,3 +1,3 @@
 class MultiChoiceOption < ApplicationRecord
-  belongs_to :question
+  belongs_to :multi_choice_question
 end
