@@ -8,7 +8,7 @@ FactoryBot.define do
     end
 
     after(:create) do |course, evaluator|
-      create_list(:student, evaluator.student_count, course: course)
+      create_list(:student, evaluator.student_count, courses: [course])
     end
   end
 end

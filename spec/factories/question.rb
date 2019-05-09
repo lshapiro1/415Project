@@ -5,6 +5,7 @@ FactoryBot.define do
     transient do
       option_count { 4 }
     end
+    course
 
     after(:create) do |question, evaluator|
       create_list(:option,  evaluator.option_count, question: question)

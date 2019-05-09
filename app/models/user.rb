@@ -12,4 +12,8 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.where(email: data['email']).first
   end
+
+  def student?
+    return !self.admin
+  end
 end

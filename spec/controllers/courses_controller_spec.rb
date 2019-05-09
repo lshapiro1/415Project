@@ -13,7 +13,7 @@ RSpec.describe CoursesController, type: :controller do
     it "doesn't redirect for signed in users" do
       sign_in FactoryBot.create(:user)
       get :index
-      c = Course.create!(:name => "One", :daytime => "MWF 9:20-10:10")
+      c = FactoryBot.create(:course)
       expect(response).to have_http_status(:success)
       expect(assigns(:courses)).to eq([c])
     end
@@ -27,8 +27,10 @@ RSpec.describe CoursesController, type: :controller do
     end
     
     it "doesn't redirect for signed in users" do
-      sign_in FactoryBot.create(:user)
-      c = Course.create!(:name => "One", :daytime => "MWF 9:20-10:10")
+      u = FactoryBot.create(:user)
+      c = FactoryBot.create(:course)
+      u.courses << c
+      sign_in u
       get :show, :params => {:id => 1}
       expect(response).to have_http_status(:success)
       expect(assigns(:course)).to eq(c)
