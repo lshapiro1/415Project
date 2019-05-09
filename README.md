@@ -37,7 +37,7 @@ App flow
 
 # Next
 
- 1. Add factories for new course populated with students
+ 1. Add hasmany/belongsto/habtm in model classes
  2. For course show page for admin: show number students
     * Link to questions for course
  3. For course show page for student: show currently active poll, if any

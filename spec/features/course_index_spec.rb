@@ -10,7 +10,7 @@ RSpec.feature "CourseIndices", type: :feature do
       Course.create!(:name => "Two", :daytime => "MWF 10:20-11:10")
 
       visit courses_path
-      expect(page.text).to match(/student@colgate.edu/)
+      expect(page.text).to match(/student\d+@colgate.edu/)
       expect(page.text).to match(/One.+TR 8:30-9:55/)
       expect(page.text).to match(/Two.+MWF 10:20-11:10/)
     end
