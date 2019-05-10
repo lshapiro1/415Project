@@ -13,5 +13,5 @@ end
 class FreeResponsePoll < Poll
 end
 
-class NumericResponsePoll < Poll
+class NumericPoll < Poll
 end

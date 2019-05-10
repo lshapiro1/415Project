@@ -16,18 +16,18 @@ class MultiChoiceQuestion < Question
   end
 
   def new_poll
-    MultiChoicePoll.new(:question => self)
+    Poll.new(:type => "MultiChoicePoll", :question => self)
   end
 end
 
 class FreeResponseQuestion < Question
   def new_poll
-    FreeResponsePoll.new(:question => self)
+    Poll.new(:type => "FreeResponsePoll", :question => self)
   end
 end
 
 class NumericQuestion < Question
   def new_poll
-    NumericPoll.new(:question => self)
+    Poll.new(:type => "NumericPoll", :question => self)
   end
 end
