@@ -5,6 +5,9 @@ class Poll < ApplicationRecord
 end
 
 class MultiChoicePoll < Poll
+  def options
+    self.question.multi_choice_options
+  end
 end
 
 class FreeResponsePoll < Poll

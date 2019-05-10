@@ -5,8 +5,7 @@ class Question < ApplicationRecord
   enum content_type: %i(html markdown plain)
 
   def content_type
-    # FIXME: do lookup on parent
-    self.content_type || "plain"
+    read_attribute(:content_type) || "plain"
   end
 end
 
