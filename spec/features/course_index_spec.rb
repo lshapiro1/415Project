@@ -48,9 +48,10 @@ RSpec.feature "CourseIndices", type: :feature do
     it "should allow an admin to see course details" do
       admin = FactoryBot.create(:admin)
       sign_in admin
-      p = FactoryBot.create(:poll)
-      q = p.question
-      c = q.course
+      c = FactoryBot.create(:course)
+      q = FactoryBot.build(:numeric_question)
+      c.questions << q
+      q.save
       visit course_path(c)
       expect(page.text).to match(/students enrolled/i)
     end

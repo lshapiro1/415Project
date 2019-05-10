@@ -14,10 +14,20 @@ class MultiChoiceQuestion < Question
   def qcontent
     read_attribute(:qcontent) || write_attribute(:qcontent, [])
   end
+
+  def new_poll
+    MultiChoicePoll.new(:question => self)
+  end
 end
 
 class FreeResponseQuestion < Question
+  def new_poll
+    FreeResponsePoll.new(:question => self)
+  end
 end
 
 class NumericQuestion < Question
+  def new_poll
+    NumericPoll.new(:question => self)
+  end
 end
