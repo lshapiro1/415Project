@@ -3,8 +3,12 @@
     %tr
       %th Name
       %th Meeting times
+      -if !current_user.student?
+        %th # Students
     -@courses.each do |c|
       %tr
         %td= link_to c.name, course_path(c)
         %td= c.daytime
+        -if !current_user.student?
+          %td= c.students.count
 
