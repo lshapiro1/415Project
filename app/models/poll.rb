@@ -6,7 +6,7 @@ end
 
 class MultiChoicePoll < Poll
   def options
-    self.question.multi_choice_options
+    self.question.qcontent
   end
 end
 

@@ -33,32 +33,46 @@ FactoryBot.define do
     end
   end
 
-  sequence :opt do |i|
-    "Option #{i}"
-  end
-
-  factory :multi_choice_option do
-    value { generate(:opt) }
-    question
-  end
-
   factory :free_response_question do
     qname { "Gimme a free response" }
     type { "FreeResponseQuestion" }
+    qcontent { "" }
+    course
   end
 
   factory :numeric_question do
     qname { "Gimme a number" }
     type { "NumericQuestion" }
-  end
-
-  factory :question do
-    qname { "Select an option" }
-    type { "NumericQuestion" }
+    qcontent { "" }
     course
   end
 
-  factory :poll do
-    question
+  factory :multi_choice_question do
+    qname { "Choose an option" }
+    type { "MultiChoiceQuestion" }
+    qcontent { ['opt1', 'opt2', 'opt3']}
+    course
+  end
+
+  sequence :responsenum do 
+    rand * 10
+  end
+
+  factory :numeric_poll_response do
+    type { "NumericPollResponse" }
+    response { generate(:responsenum) }
+    numeric_question
+  end
+
+  factory :multi_choice_poll_response do
+    type { "MultiChoicePollResponse" }
+    multi_choice_question
+    response { 2 }
+  end
+
+  factory :free_response_poll_response do
+    type { "FreeResponsePollResponse" }
+    free_response_question
+    response { "random text" }
   end
 end

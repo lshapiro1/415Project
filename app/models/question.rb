@@ -5,12 +5,15 @@ class Question < ApplicationRecord
   enum content_type: %i(html markdown plain)
 
   def content_type
-    read_attribute(:content_type) || "plain"
+    read_attribute(:content_type) || write_attribute(:content_type, "plain")
   end
 end
 
 class MultiChoiceQuestion < Question
-  has_many :multi_choice_options, :dependent => :destroy
+  serialize :qcontent, Array  
+  def qcontent
+    read_attribute(:qcontent) || write_attribute(:qcontent, [])
+  end
 end
 
 class FreeResponseQuestion < Question

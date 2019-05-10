@@ -6,7 +6,7 @@ end
 class MultiChoicePollResponse < PollResponse
   def response
     r = read_attribute(:response)
-    self.poll.question.options.where(:value => r).first
+    self.poll.options.index(r)
   end
 end
 
