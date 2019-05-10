@@ -54,14 +54,8 @@ FactoryBot.define do
 
   factory :question do
     qname { "Select an option" }
-    type { "MultiChoiceQuestion" }
-    transient do
-      option_count { 4 }
-    end
-
-    after(:create) do |question, evaluator|
-      create_list(:multi_choice_option,  evaluator.option_count, question: question)
-    end
+    type { "NumericQuestion" }
+    course
   end
 
   factory :poll do
