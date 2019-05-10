@@ -27,6 +27,9 @@ FactoryBot.define do
 
     after(:create) do |course, evaluator|
       create_list(:student, evaluator.student_count, courses: [course])
+      course.questions.create(attributes_for(:question)) do |quest|
+        quest.type = 'NumericQuestion'
+      end
     end
   end
 
@@ -41,21 +44,20 @@ FactoryBot.define do
 
   factory :free_response_question do
     qname { "Gimme a free response" }
-    type { "free_response_question" }
+    type { "FreeResponseQuestion" }
   end
 
   factory :numeric_question do
     qname { "Gimme a number" }
-    type { "numeric_question" }
+    type { "NumericQuestion" }
   end
 
   factory :question do
     qname { "Select an option" }
-    type { "multi_choice_question" }
+    type { "MultiChoiceQuestion" }
     transient do
       option_count { 4 }
     end
-    course
 
     after(:create) do |question, evaluator|
       create_list(:multi_choice_option,  evaluator.option_count, question: question)
