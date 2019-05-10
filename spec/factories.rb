@@ -21,12 +21,14 @@ FactoryBot.define do
     name { "A Course" }
     daytime { "TR 8:30-9:55" }
 
-    transient do
-      student_count { 10 }
-    end
-
-    after(:create) do |course, evaluator|
-      create_list(:student, evaluator.student_count, courses: [course])
+    factory :course_with_students do
+      transient do
+        student_count { 10 }
+      end
+    
+      after(:create) do |course, evaluator|
+        create_list(:student, evaluator.student_count, courses: [course])
+      end
     end
   end
 
@@ -34,9 +36,4 @@ FactoryBot.define do
     qname { "a numeric question" }
     type { "NumericQuestion" }
   end
-
-#  factory :free_response_question do
-#    qname { "a free response question" }
-#    type { "FreeResponseQuestion" }
-#  end
 end

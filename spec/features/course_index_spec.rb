@@ -41,7 +41,7 @@ RSpec.feature "CourseIndices", type: :feature do
       expect(page.current_path).to eq(course_path(c2))
       expect(page.text).to match(/no current poll/i)
 
-      visit course_path(3)
+      visit course_path(10000)
       expect(page.current_path).to eq(courses_path)
     end
 
