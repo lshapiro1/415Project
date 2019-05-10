@@ -35,14 +35,24 @@ RSpec.feature "CourseIndices", type: :feature do
 
       visit course_path(c1)
       expect(page.current_path).to eq(course_path(c1))
-      expect(page.text).to match(/no current poll/)
+      expect(page.text).to match(/no current poll/i)
 
       visit course_path(c2)
       expect(page.current_path).to eq(course_path(c2))
-      expect(page.text).to match(/no current poll/)
+      expect(page.text).to match(/no current poll/i)
 
       visit course_path(3)
       expect(page.current_path).to eq(courses_path)
+    end
+
+    it "should allow an admin to see course details" do
+      admin = FactoryBot.create(:admin)
+      sign_in admin
+      p = FactoryBot.create(:poll)
+      q = p.question
+      c = q.course
+      visit course_path(c)
+      expect(page.text).to match(/students enrolled/i)
     end
   end
 end

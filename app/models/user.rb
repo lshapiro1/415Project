@@ -5,7 +5,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
 
   has_and_belongs_to_many :courses
-  has_many :poll_responses
+  has_many :poll_responses, :dependent => :destroy
   has_many :polls, :through => :poll_responses
 
   def self.from_omniauth(access_token)
