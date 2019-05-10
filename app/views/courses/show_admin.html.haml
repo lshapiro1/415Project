@@ -9,6 +9,6 @@
       %th # Polls
     -@course.questions do |q|
       %tr
-        %td= q.question
+        %td= link_to q.qname, question_path(@course, q)
         %td= q.question.polls.count
 

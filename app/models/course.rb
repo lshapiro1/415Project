@@ -5,6 +5,10 @@ class Course < ApplicationRecord
   has_and_belongs_to_many :students, :class_name => "User"
   has_many :questions, :dependent => :destroy
 
+  def active_question
+    questions.joins([:polls]).where("polls.isopen = ?", true).first
+  end
+
   def now?
     return false unless self.daytime =~ /([MTWRF]{2,3}) (\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})/
     dow = %w{Su M T W R F Sa}

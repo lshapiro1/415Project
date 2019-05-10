@@ -4,6 +4,10 @@ class Question < ApplicationRecord
   validates :qname, presence: true
   enum content_type: %i(html markdown plain)
 
+  def active_poll
+    polls.where(:isopen => true).first
+  end
+
   def content_type
     read_attribute(:content_type) || write_attribute(:content_type, "plain")
   end
@@ -15,19 +19,19 @@ class MultiChoiceQuestion < Question
     read_attribute(:qcontent) || write_attribute(:qcontent, [])
   end
 
-  def new_poll
-    Poll.new(:type => "MultiChoicePoll", :question => self)
+  def new_poll(h={})
+    Poll.new(:type => "MultiChoicePoll", :question => self, **h)
   end
 end
 
 class FreeResponseQuestion < Question
-  def new_poll
-    Poll.new(:type => "FreeResponsePoll", :question => self)
+  def new_poll(h={})
+    Poll.new(:type => "FreeResponsePoll", :question => self, **h)
   end
 end
 
 class NumericQuestion < Question
-  def new_poll
-    Poll.new(:type => "NumericPoll", :question => self)
+  def new_poll(h={})
+    Poll.new(:type => "NumericPoll", :question => self, **h)
   end
 end
