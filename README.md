@@ -39,9 +39,12 @@ App flow
 
  * For course show page for admin: show number students
     * Link to questions for course
-
  * Fix content_type method on question
- * For question index page for student: redirect to course show or course index
  * For question index page for admin: show questions and polls, button to create new question, for each question button to make new poll
+ * When redirecting a student to courses_index, potentially redirect to show page if they're just in one course, or to the *right* course page if it's the right time/day
+ * For poll controller, bar student from going to anything
  * For poll index page show each poll, number of responses, whether open/closed
  * For poll show page, show response details
+ * new/create for question
+ * new/create for poll
+ * scope on course to get currently open poll
