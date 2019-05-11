@@ -40,4 +40,29 @@ RSpec.describe Course, type: :model do
       expect(c.now?).to be true
     end
   end
+
+  describe "active question/poll" do
+    it "should return the id of the question with an active poll" do
+      course = Course.create(:name => "course", :daytime => "TR 9:55-10:00")
+      q = NumericQuestion.create(:qname => "a question", :course => course)
+      q2 = NumericQuestion.create(:qname => "question 2", :course => course)
+      1.upto(2) do |i|
+        q.new_poll(:isopen => false, :round => i).save!
+        q2.new_poll(:isopen => false, :round => i).save!
+      end
+      q2.new_poll(:isopen => true, :round => 3).save!
+      expect(course.active_question).to eq(q2)
+    end
+
+    it "should return nil if no poll is active" do
+      c = Course.create(:name => "course", :daytime => "TR 9:55-10:00")
+      q = NumericQuestion.create(:qname => "a question", :course => c)
+      q2 = NumericQuestion.create(:qname => "another question", :course => c)
+      1.upto(3) do |i| 
+        q.new_poll(:isopen => false, :round => i).save!
+        q2.new_poll(:isopen => false, :round => i).save!
+      end
+      expect(c.active_question).to be nil
+    end
+  end
 end

@@ -2,6 +2,8 @@ class Poll < ApplicationRecord
   belongs_to :question
   has_many :poll_responses, :dependent => :destroy
   has_many :users, :through => :poll_responses
+
+  validates_associated :question
 end
 
 class MultiChoicePoll < Poll

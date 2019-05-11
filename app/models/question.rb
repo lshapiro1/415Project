@@ -2,6 +2,7 @@ class Question < ApplicationRecord
   belongs_to :course
   has_many :polls, :dependent => :destroy
   validates :qname, presence: true
+  validates_associated :course
   enum content_type: %i(html markdown plain)
 
   def active_poll
