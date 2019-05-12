@@ -44,11 +44,21 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe "POST #create" do
     it "redirects to new on failure" do
-      s = FactoryBot.create(:admin)
-      sign_in s
+      a = FactoryBot.create(:admin)
+      sign_in a
       c = FactoryBot.create(:course)      
       post :create, :params => {:course_id => c.id, :question => {:qname => "", :qcontent => "", :type => "MultiChoiceQuestion" }}
       expect(response).to redirect_to(new_course_question_path(c))
+    end
+  end
+
+  describe "DELETE #destroy" do
+    it "should delete successfully for valid ids" do
+      sign_in FactoryBot.create(:admin)
+      c = FactoryBot.create(:course)      
+      q = Question.create(:course => c, :qname => "question", :type => "NumericQuestion")
+      delete :destroy, :params => {:course_id => c.id, :id => q.id}
+      expect(response).to redirect_to(course_questions_path(c))
     end
   end
 end
