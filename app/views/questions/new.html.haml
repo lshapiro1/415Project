@@ -6,3 +6,6 @@
       =f.select :type, question_types
       =f.text_area :qcontent
       =f.submit
+
+  #bottom
+    =link_to "Back to question index", course_questions_path(@course)

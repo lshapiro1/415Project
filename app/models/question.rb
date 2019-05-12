@@ -3,6 +3,7 @@ class Question < ApplicationRecord
   has_many :polls, :dependent => :destroy
   validates :qname, presence: true
   validates_associated :course
+  validate :options_for_multichoice
   enum content_type: %i(html markdown plain)
 
   def active_poll
@@ -11,6 +12,13 @@ class Question < ApplicationRecord
 
   def content_type
     read_attribute(:content_type) || write_attribute(:content_type, "plain")
+  end
+
+protected
+  def options_for_multichoice
+    if type == "MultiChoiceQuestion" and qcontent.length < 2
+      errors.add(:qcontent, "missing newline-separated options for multichoice question")
+    end
   end
 end
 
