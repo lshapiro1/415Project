@@ -4,6 +4,10 @@ class Poll < ApplicationRecord
   has_many :users, :through => :poll_responses
 
   validates_associated :question
+
+  def self.deactivate(course)
+    Poll.joins(:question).where("polls.isopen = ? AND polls.question_id = questions.id AND questions.course_id = ?", true, course.id).update_all(:isopen => false)
+  end
 end
 
 class MultiChoicePoll < Poll

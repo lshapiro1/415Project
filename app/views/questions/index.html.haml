@@ -10,15 +10,15 @@
       %th Type
       %th Date
       %th Delete
-      %th Activate
+      %th New Poll
     -@questions.each do |q|
       %tr
         %td= link_to q.qname, course_question_polls_path(@course, q)
         %td= q.polls.count
         %td= question_type(q.type)
-        %td FIXME date
+        %td= time_tag q.created_at, :format => "%Y/%m/%d"
         %td= link_to "Delete", course_question_path(@course, q), :method => :delete, :class => "btn", :id => "destroy_#{q.qname}"
-        %td FIXME: link to create new poll and activate for question
+        %td= link_to "Activate", course_question_polls_path(@course, q), :method => :post, :class => "btn", :id => "create_#{q.qname}"
 
   #bottom
     %p= link_to "Create a new question", new_course_question_path(@course)
