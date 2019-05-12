@@ -1,4 +1,6 @@
 class CoursesController < ApplicationController
+  before_action :go_to_current_course, :only => [:index]
+
   def index
     @courses = Course.all
   end
@@ -15,4 +17,17 @@ class CoursesController < ApplicationController
       redirect_to course_questions_path(@course) and return
     end
   end
+
+private
+  def go_to_current_course
+    cassoc = current_user.admin ? Course.all : current_user.courses
+    cassoc.each do |c|
+      # if course is going on now, then return show page path for redirect
+      if c.now?
+        redirect_to course_path(c) and return
+      end
+    end
+    # fall-through on index if there's no specific course to redirect to
+  end
+
 end
