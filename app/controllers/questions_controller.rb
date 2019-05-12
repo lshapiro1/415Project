@@ -15,12 +15,21 @@ class QuestionsController < ApplicationController
     @course = Course.find(params[:course_id])    
     @q = @course.questions.create(create_params)
     if @q.persisted?
+      flash[:info] = "#{@q.qname} created"
       redirect_to course_questions_path(@course) and return
     else
       msg = @q.errors.full_messages.join('; ')
       flash[:warning] = "No question created: #{msg}"
       redirect_to new_course_question_path(@course) and return
     end
+  end
+
+  def destroy
+    c = Course.find(params[:course_id])    
+    q = c.questions.find(params[:id])
+    q.destroy
+    flash[:info] = "#{q.qname} destroyed"
+    redirect_to course_questions_path(c)
   end
 
 private

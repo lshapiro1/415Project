@@ -37,8 +37,6 @@ App flow
 
 # Next
 
- * When redirecting a student to courses_index, potentially redirect to show page if they're just in one course, or to the *right* course page if it's the right time/day
-
  * Show date created on question index
  * Delete link on question index
  * New poll on question index
