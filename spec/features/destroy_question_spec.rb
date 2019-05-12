@@ -15,6 +15,6 @@ RSpec.feature "DestroyQuestions", type: :feature do
     expect(page.text).to match(/TEST/)
     click_link "destroy_TEST"
     expect(page.current_path).to eq(course_questions_path(c))
-    expect(page.text).not_to match(/TEST/)
+    expect(page.text).to match(/TEST destroyed/)
   end
 end
