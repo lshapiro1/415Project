@@ -31,4 +31,24 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to(courses_path)
     end
   end
+
+  describe "GET #new" do
+    it "returns http success for an admin" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course)      
+      get :index, :params => {:course_id => c.id}
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe "POST #create" do
+    it "redirects to new on failure" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course)      
+      post :create, :params => {:course_id => c.id, :question => {:qname => "", :qcontent => "", :type => "MultiChoiceQuestion" }}
+      expect(response).to redirect_to(new_course_question_path(c))
+    end
+  end
 end
