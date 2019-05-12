@@ -38,9 +38,7 @@ App flow
 # Next
 
  * Show date created on question index
- * Delete link on question index
  * New poll on question index
-
  * Create new poll from an existing question
  * For poll index page show each poll, number of responses, whether open/closed
  * For poll show page, show response details

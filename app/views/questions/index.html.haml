@@ -17,7 +17,7 @@
         %td= q.polls.count
         %td= question_type(q.type)
         %td FIXME date
-        %td= link_to "Delete", course_question_path(@course, q), :method => :delete, :class => "btn"
+        %td= link_to "Delete", course_question_path(@course, q), :method => :delete, :class => "btn", :id => "destroy_#{q.qname}"
         %td FIXME: link to create new poll and activate for question
 
   #bottom
