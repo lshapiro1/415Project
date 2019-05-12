@@ -20,6 +20,9 @@ protected
       errors.add(:qcontent, "missing newline-separated options for multichoice question")
     end
   end
+
+  def prompt
+  end
 end
 
 class MultiChoiceQuestion < Question
@@ -31,16 +34,28 @@ class MultiChoiceQuestion < Question
   def new_poll(h={})
     Poll.new(:type => "MultiChoicePoll", :question => self, **h)
   end
+
+  def prompt
+    "Select one option"
+  end
 end
 
 class FreeResponseQuestion < Question
   def new_poll(h={})
     Poll.new(:type => "FreeResponsePoll", :question => self, **h)
   end
+
+  def prompt
+    "Enter a text response"
+  end
 end
 
 class NumericQuestion < Question
   def new_poll(h={})
     Poll.new(:type => "NumericPoll", :question => self, **h)
+  end
+
+  def prompt
+    "Enter a number"
   end
 end

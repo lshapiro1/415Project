@@ -1,0 +1,16 @@
+%table.table
+  %tr
+    %th= @question.qname
+
+  -if @poll.isopen
+    %tr
+      %th= @question.prompt
+  -else
+    %tr
+      %th Poll closed
+
+  -if @question.qcontent
+    -@question.qcontent.each_with_index do |opt, idx|
+      %tr
+        %td= "#{idx+1}. #{opt}"
+

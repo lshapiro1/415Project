@@ -7,11 +7,17 @@ class PollsController < ApplicationController
     @polls = @question.polls
   end
 
+  def show
+    @course = Course.find(params[:course_id])
+    @question = Question.find(params[:question_id])
+    @poll = Poll.find(params[:id])
+  end
+
   def create
     @course = Course.find(params[:course_id])
     @question = Question.find(params[:question_id])
     Poll.deactivate(@course)
-    num = @question.polls.count
+    num = @question.polls.maximum(:round).to_i
     @poll = @question.new_poll
     @poll.isopen = true
     @poll.round = num + 1
@@ -29,7 +35,7 @@ class PollsController < ApplicationController
     @question = Question.find(params[:question_id])
     @poll = Poll.find(params[:id])
     @poll.update(:isopen => false)
-    flash[:notice] = "Poll stopped for #{@question.name}"
+    flash[:notice] = "Poll stopped for #{@question.qname}"
     redirect_to course_question_poll_path(@course, @question, @poll)
   end
 
@@ -37,6 +43,7 @@ class PollsController < ApplicationController
     @course = Course.find(params[:course_id])
     @question = Question.find(params[:question_id])
     @poll = Poll.find(params[:id])
+    @poll.destroy
     flash[:notice] = "Poll #{@poll.round} for #{@question.qname} destroyed"
     redirect_to course_question_polls_path(@course, @question)
   end

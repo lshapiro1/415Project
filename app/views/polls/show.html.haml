@@ -1,0 +1,14 @@
+#main
+  %h3= @course.name
+  %p= "Poll #{@poll.round}"
+
+  =render partial: 'poll'
+
+  -if @poll.isopen
+    %p= link_to "Stop poll", course_question_poll_path(@course, @question, @poll), :method => :put
+
+#bottom
+  %p= link_to "Back to polls", course_question_polls_path(@course, @question)
+  %p= link_to "Back to questions", course_questions_path(@course)
+  %p= link_to "Back to courses", courses_path
+
