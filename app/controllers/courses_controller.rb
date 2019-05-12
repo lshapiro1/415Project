@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
       end
       render 'show_student'
     else
-      render 'show_admin'        
+      redirect_to course_questions_path(@course) and return
     end
   end
 end

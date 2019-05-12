@@ -1,0 +1,8 @@
+#main
+
+  #form
+    =form_for [@course, @q], method: :post do |f|
+      =f.text_field :qname
+      =f.select :type, question_types
+      =f.text_area :qcontent
+      =f.submit

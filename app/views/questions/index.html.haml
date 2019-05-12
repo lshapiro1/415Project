@@ -1,2 +1,22 @@
-%h1 Questions#index
-%p Find me in app/views/questions/index.html.haml
+#main
+  %p= @course.name
+  %p= @course.daytime
+  %p= "Students enrolled: #{@course.students.count}"
+
+  %table
+    %tr
+      %th Name
+      %th # Polls
+      %th Type
+      %th Activate
+    -@questions.each do |q|
+      %tr
+        %td= link_to q.qname, course_question_polls_path(@course, q)
+        %td= q.polls.count
+        %td= question_type(q.type)
+        %td FIXME: link to create new poll and activate for question
+
+  %div#bottom
+    %p= link_to "Create a new question", new_course_question_path(@course)
+
+

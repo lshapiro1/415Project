@@ -44,3 +44,38 @@ App flow
  * For poll show page, show response details
  * new/create for question
  * new/create for poll
+
+---
+ 
+ Cable
+
+  * Need to create a channel class to subscribe to updates on polls (PollChannel)
+  * after a client logs in and get redirected to /courses/:id, they should
+    create a subscription to the appropriate channel
+     in client in JS
+     ```
+     App.pollChannel = App.cable.subscriptions.create({ channel: "PollChannel",
+        received: function(data) {},
+     });
+     ```
+
+  * In PollChannel:
+  ```
+  class PollChannel < ApplicationCable::Channel
+    def subscribed
+      stream_from "poll_for_#{params[:course]}"
+    end
+
+    def receive(data)
+      # receive data from client
+    end
+  end
+  ```
+
+  * broadcasting to channel:
+  PollChannel.broadcast_to("poll_for_xxx", hash details for poll)
+
+  * client send on channel
+  ```
+  App.pollChannel.send({ sent_by: "Paul", body: "This is a cool chat app." });
+  ```
