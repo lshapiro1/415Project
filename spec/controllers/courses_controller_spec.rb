@@ -43,4 +43,18 @@ RSpec.describe CoursesController, type: :controller do
       expect(response).to redirect_to(courses_path)
     end
   end
+
+  describe "correct redirect on auth" do
+    it "should redirect to course going on now if available for std" do
+    end
+
+    it "should redirect to course going on now if available for admin" do
+    end
+
+    it "should redirect to course index if no course is on now for std" do
+    end
+
+    it "should redirect to course index if no course is on now for admin" do
+    end
+  end
 end

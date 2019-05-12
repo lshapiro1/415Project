@@ -37,15 +37,17 @@ App flow
 
 # Next
 
- * For question index page for admin: show questions and polls, button to create new question, for each question button to make new poll
-   * need to fix multichoice and figure out how to handle other question
-     assets
  * When redirecting a student to courses_index, potentially redirect to show page if they're just in one course, or to the *right* course page if it's the right time/day
 
+ * Show date created on question index
+ * Delete link on question index
+ * New poll on question index
+
+ * Create new poll from an existing question
  * For poll index page show each poll, number of responses, whether open/closed
  * For poll show page, show response details
- * new/create for question
- * new/create for poll
+
+ * attendance for student(s)?
 
 ---
  
