@@ -5,7 +5,7 @@ class Poll < ApplicationRecord
 
   validates_associated :question
 
-  def self.deactivate(course)
+  def self.closeall(course)
     Poll.joins(:question).where("polls.isopen = ? AND polls.question_id = questions.id AND questions.course_id = ?", true, course.id).update_all(:isopen => false)
   end
 end

@@ -1,5 +1,8 @@
 #main
-  %p#current No current poll
+  -if @poll
+    =render partial: 'poll'
+  -else
+    %p#current No current poll
 
   %p#refresh= link_to "Refresh", course_path(@course)
 

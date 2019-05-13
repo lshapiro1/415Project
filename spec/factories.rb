@@ -36,4 +36,15 @@ FactoryBot.define do
     qname { "a numeric question" }
     type { "NumericQuestion" }
   end
+
+  factory :free_response_question do
+    qname { "a free response question" }
+    type { "FreeResponseQuestion" }
+  end
+
+  factory :multi_choice_question do
+    qname { "a multiple choice question" }
+    type { "MultiChoiceQuestion" }
+    qcontent { %w{one two three four} }
+  end
 end

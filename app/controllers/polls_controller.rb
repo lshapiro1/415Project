@@ -16,7 +16,7 @@ class PollsController < ApplicationController
   def create
     @course = Course.find(params[:course_id])
     @question = Question.find(params[:question_id])
-    Poll.deactivate(@course)
+    Poll.closeall(@course)
     num = @question.polls.maximum(:round).to_i
     @poll = @question.new_poll
     @poll.isopen = true

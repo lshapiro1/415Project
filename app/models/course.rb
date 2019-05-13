@@ -9,6 +9,10 @@ class Course < ApplicationRecord
     questions.joins([:polls]).where("polls.isopen = ?", true).first
   end
 
+  def active_poll
+    Poll.joins(:question).where("polls.isopen = ? AND polls.question_id = questions.id AND questions.course_id = ?", true, self.id).first
+  end
+
   def now?
     return false unless self.daytime =~ /([MTWRF]{2,3}) (\d{1,2}):(\d{2})-(\d{1,2}):(\d{2})/
     dow = %w{Su M T W R F Sa}
