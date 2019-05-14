@@ -17,6 +17,9 @@ RSpec.feature "PollActivates", type: :feature do
       sign_in student
       visit course_path(c)
       expect(page.text).to match(/Q1/)
+      fill_in "response", :with => 1.0
+      click_on "Submit answer"
+      expect(page.current_path).to eq(course_path(c))
     end
 
     it "an active free response should be visible" do
