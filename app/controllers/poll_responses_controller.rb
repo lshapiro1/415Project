@@ -4,8 +4,7 @@ class PollResponsesController < ApplicationController
     # extract params and create new response or update existing response
     @course = Course.find(params[:course_id])
     @question = Question.find(params[:question_id])
-    @polls = Poll.find(params[:id])
-
+    @polls = Poll.find(params[:poll_id])
     byebug
   end
 end
