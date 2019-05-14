@@ -11,9 +11,11 @@ module QuestionsHelper
   def question_input(q)
     case q.type
       when "MultiChoiceQuestion"
+        s = ""
         q.qcontent.each do |opt|
-          radio_button_tag :response, opt
+          s += radio_button_tag('response', opt)
         end
+        s.html_safe
       when "NumericQuestion"
         number_field_tag :response, :step => 0.01 
       when "FreeResponseQuestion"

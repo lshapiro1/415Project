@@ -1,10 +1,25 @@
 class PollResponsesController < ApplicationController
   def create
-    # FIXME: verify that current_user is a student enrolled in @course
-    # extract params and create new response or update existing response
     @course = Course.find(params[:course_id])
+
+    if !@course.students.include? current_user
+      flash[:alert] = "You aren't enrolled in #{@course.name}.  If that is a mistake, please contact the administrator."
+      redirect_to courses_path and return
+    end
+
     @question = Question.find(params[:question_id])
-    @polls = Poll.find(params[:poll_id])
-    byebug
+    @poll = Poll.find(params[:poll_id])
+
+    r = @poll.poll_responses.where(:user => current_user).first
+    if !r
+      r = @poll.new_response(:user => current_user)
+    end
+    r.response = params[:response]
+    if r.save
+      flash[:notice] = "Response recorded"
+    else
+      flash[:notice] = "Saving response failed"
+    end
+    redirect_to course_path(@course) and return
   end
 end
