@@ -5,6 +5,7 @@ class Question < ApplicationRecord
   validates_associated :course
   validate :options_for_multichoice
   enum content_type: %i(html markdown plain)
+  has_one_attached :image
 
   def active_poll
     polls.where(:isopen => true).first
