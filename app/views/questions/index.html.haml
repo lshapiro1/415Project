@@ -16,7 +16,7 @@
         %td= link_to q.qname, course_question_polls_path(@course, q)
         %td= q.polls.count
         %td= question_type(q.type)
-        %td= time_tag q.created_at, :format => "%Y/%m/%d"
+        %td= time_tag q.created_at.localtime, :format => "%Y/%m/%d"
         %td= link_to "Delete", course_question_path(@course, q), :method => :delete, :class => "btn", :id => "destroy_#{q.qname}"
         %td= link_to "Activate", course_question_polls_path(@course, q), :method => :post, :class => "btn", :id => "create_#{q.qname}"
 

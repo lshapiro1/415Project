@@ -1,6 +1,8 @@
 #main
   -if @poll
-    =render partial: 'poll'
+    %h3= @question.qname 
+    %h4= @question.prompt
+    %p FIXME    
   -else
     %p#current No current poll
 

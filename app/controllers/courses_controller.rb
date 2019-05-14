@@ -13,6 +13,7 @@ class CoursesController < ApplicationController
         redirect_to courses_path and return
       end
       @poll = @course.active_poll
+      @question = @course.active_question
       render 'show_student'
     else
       redirect_to course_questions_path(@course) and return
