@@ -14,6 +14,7 @@ class Question < ApplicationRecord
     read_attribute(:content_type) || write_attribute(:content_type, "plain")
   end
 
+
 protected
   def options_for_multichoice
     if type == "MultiChoiceQuestion" and qcontent.length < 2
@@ -21,8 +22,7 @@ protected
     end
   end
 
-  def prompt
-  end
+  def prompt; end
 end
 
 class MultiChoiceQuestion < Question

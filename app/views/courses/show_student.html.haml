@@ -2,7 +2,9 @@
   -if @poll
     %h3= @question.qname 
     %h4= @question.prompt
-    %p FIXME    
+    =form_for @response, :method => :post, :url => course_question_poll_poll_responses_path(@course, @question, @poll) do |f|
+      =question_input(@question, f)
+      =f.submit "Submit answer" 
   -else
     %p#current No current poll
 
