@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
       @question = @course.active_question
       if @poll
         @response = @poll.new_response
+        @current = PollResponse.where(:poll => @poll, :user => current_user).first
       end
       render 'show_student'
     else

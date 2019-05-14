@@ -5,10 +5,6 @@ class PollResponse < ApplicationRecord
 end
 
 class MultiChoicePollResponse < PollResponse
-  def response
-    r = read_attribute(:response)
-    self.poll.options.index(r)
-  end
 end
 
 class FreeResponsePollResponse < PollResponse

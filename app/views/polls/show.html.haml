@@ -12,7 +12,7 @@
   %h4 Responses
   %table.table
     -@poll.responses.each_pair do |v,count| 
-      %tr
+      %tr{:class => row_class(@question, v)}
         %th= v
         %td= count
 

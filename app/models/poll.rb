@@ -20,11 +20,14 @@ class MultiChoicePoll < Poll
   end
 
   def responses
-    h = {}
+    outhash = {}
+    h = self.poll_responses.group(:response).count
     opts = self.question.qcontent
-    opts.each { |v| h[v] = 0 }
-    self.poll_responses.each { |r| h[opts[r.response]] += 1 }
-    h
+    0.upto(opts.length-1) do |i|
+      count = h[i.to_s].to_i
+      outhash[opts[i]] = count
+    end
+    outhash
   end
 end
 
@@ -34,9 +37,7 @@ class FreeResponsePoll < Poll
   end
 
   def responses
-    h = Hash.new(0)
-    self.poll_responses.each { |r| h[r.response.downcase] += 1 }
-    h
+    self.poll_responses.group(:response).count
   end
 end
 
@@ -46,12 +47,8 @@ class NumericPoll < Poll
   end
 
   def responses
-    resp = self.poll_responses.each {|r| r }.collect
-    m1,m2 = resp.minmax
-    h = {
-        "min" => m1,
-        "max" => m2,
-    }
+    h = Hash.new(0)
+    self.poll_responses.select(:response).each { |r| h[r.response] += 1 }
     h
   end
 end
