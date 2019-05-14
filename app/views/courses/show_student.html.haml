@@ -1,6 +1,8 @@
 #main
   -if @poll
     %h3= @question.qname 
+    -if @question.image
+      %p= image_tag @question.image.variant(resize: "480x480^")
     %h4= @question.prompt
     =form_for @response, :method => :post, :url => course_question_poll_poll_responses_path(@course, @question, @poll) do 
       =question_input(@question) 

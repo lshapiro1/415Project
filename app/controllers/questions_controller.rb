@@ -14,6 +14,7 @@ class QuestionsController < ApplicationController
   def create
     @course = Course.find(params[:course_id])    
     @q = @course.questions.create(create_params)
+    @q.image.attach(create_params[:image])
     if @q.persisted?
       flash[:notice] = "#{@q.qname} created"
       redirect_to course_questions_path(@course) and return
@@ -34,7 +35,7 @@ class QuestionsController < ApplicationController
 
 private
   def create_params
-    p = params.require(:question).permit(:qname, :type, :qcontent, :content_type)
+    p = params.require(:question).permit(:qname, :type, :qcontent, :content_type, :image)
     # reform qcontent into an array
     if p[:qcontent]
       p[:qcontent] = p[:qcontent].split.collect { |s| s.strip }

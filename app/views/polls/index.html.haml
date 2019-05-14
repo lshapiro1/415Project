@@ -2,6 +2,8 @@
   %h2= @course.name
   %h3= @question.qname
   %p= "#{question_type(@question.type)} question"
+  -if @question.image
+    %p= image_tag @question.image.variant(resize: "480x480^")
 
   %table.table
     %tr

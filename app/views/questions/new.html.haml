@@ -11,6 +11,9 @@
       =f.label :qcontent, "Options:"
       =f.text_area :qcontent
       %br
+      =f.label :image, "Image"
+      =f.file_field :image, :accept => 'image/png,image/gif,image/jpeg,image/pdf'
+      %br
       =f.submit "Create question"
 
   #bottom
