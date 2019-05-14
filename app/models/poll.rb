@@ -18,16 +18,40 @@ class MultiChoicePoll < Poll
   def options
     self.question.qcontent
   end
+
+  def responses
+    h = {}
+    opts = self.question.qcontent
+    opts.each { |v| h[v] = 0 }
+    self.poll_responses.each { |r| h[opts[r.response]] += 1 }
+    h
+  end
 end
 
 class FreeResponsePoll < Poll
   def new_response(h={})
     PollResponse.new(:type => "FreeResponsePollResponse", :poll => self, **h)
   end
+
+  def responses
+    h = Hash.new(0)
+    self.poll_responses.each { |r| h[r.response.downcase] += 1 }
+    h
+  end
 end
 
 class NumericPoll < Poll
   def new_response(h={})
     PollResponse.new(:type => "NumericPollResponse", :poll => self, **h)
+  end
+
+  def responses
+    resp = self.poll_responses.each {|r| r }.collect
+    m1,m2 = resp.minmax
+    h = {
+        "min" => m1,
+        "max" => m2,
+    }
+    h
   end
 end

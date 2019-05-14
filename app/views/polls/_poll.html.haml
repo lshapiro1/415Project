@@ -9,7 +9,7 @@
     %tr
       %th Poll closed
 
-  -if @question.qcontent
+  -if @question.qcontent.is_a? Array
     -@question.qcontent.each_with_index do |opt, idx|
       %tr
         %td= "#{idx+1}. #{opt}"

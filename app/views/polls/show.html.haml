@@ -4,8 +4,17 @@
 
   =render partial: 'poll'
 
+
   -if @poll.isopen
     %p= link_to "Stop poll", course_question_poll_path(@course, @question, @poll), :method => :put
+
+#responses
+  %h4 Responses
+  %table.table
+    -@poll.responses.each_pair do |v,count| 
+      %tr
+        %th= v
+        %td= count
 
 #bottom
   %p= link_to "Back to polls", course_question_polls_path(@course, @question)

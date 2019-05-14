@@ -13,6 +13,7 @@ module QuestionsHelper
       when "MultiChoiceQuestion"
         s = ""
         q.qcontent.each do |opt|
+          s += label_tag(opt)
           s += radio_button_tag('response', opt)
         end
         s.html_safe

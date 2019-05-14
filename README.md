@@ -37,10 +37,11 @@ App flow
 
 # Next
 
- * New poll on question index
- * For poll index page show each poll, number of responses, whether open/closed
+ * When student updates poll response, repopulate form with existing choice
  * For poll show page, show response details
- * attendance for student(s)?
+ * Admin dashboard: need to add answer and show dashboard of what's correct
+ * Put poll response data in easy to collect tags for plotting w/d3js
+ * Attendance for student(s)?
 
 ---
  
