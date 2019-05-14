@@ -2,9 +2,15 @@
 
   #form
     =form_for [@course, @q], method: :post do |f|
+      =f.label :qname, "Question text:"
       =f.text_field :qname
+      %br
+      =f.label :type, "Question type:"
       =f.select :type, question_types
+      %br
+      =f.label :qcontent, "Options:"
       =f.text_area :qcontent
+      %br
       =f.submit "Create question"
 
   #bottom
