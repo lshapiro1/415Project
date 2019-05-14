@@ -8,16 +8,16 @@ module QuestionsHelper
     %w{MultiChoiceQuestion NumericQuestion FreeResponseQuestion}
   end
 
-  def question_input(q, f)
+  def question_input(q)
     case q.type
       when "MultiChoiceQuestion"
         q.qcontent.each do |opt|
-          f.radio_button :response, opt
+          radio_button_tag :response, opt
         end
       when "NumericQuestion"
-        f.number_field :response, :step => 0.01 
+        number_field_tag :response, :step => 0.01 
       when "FreeResponseQuestion"
-        f.text_field :response
+        text_field_tag :response
     end
   end
 end

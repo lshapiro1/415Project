@@ -7,5 +7,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(:email => 'jsommers@colgate.edu', :admin => true)
-User.create!(:email => 'sommersmeister@gmail.com')
-Course.create!(:name => 'COSC 101A', :daytime => 'TR 8:30-9:45')
+u = User.create!(:email => 'sommersmeister@gmail.com')
+c = Course.create!(:name => 'COSC 101A', :daytime => 'TR 8:30-9:45')
+c.students << u
