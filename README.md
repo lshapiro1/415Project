@@ -38,6 +38,7 @@ App flow
 # Next
 
  * When student updates poll response, repopulate form with existing choice
+ * Add image to question render after question text
  * For poll show page, show response details
  * Admin dashboard: need to add answer and show dashboard of what's correct
  * Put poll response data in easy to collect tags for plotting w/d3js
