@@ -70,4 +70,48 @@ RSpec.describe Poll, type: :model do
       end
     end
   end
+
+  describe "Poll responses" do
+    it "should give a hash of responses for numeric polls" do
+      c = FactoryBot.create(:course)
+      q = FactoryBot.create(:numeric_question, :course => c)
+      p = q.new_poll(:round => 1, :isopen => false)
+      q.save!
+      1.upto(10) do |i|
+        s = FactoryBot.create(:student)
+        c.students << s
+        r = p.new_response(:response => "1", :user => s)
+        r.save!
+      end
+      expect(p.responses).to eq({"1" => 10})
+    end
+
+    it "should give a hash of responses for multichoice polls" do
+      c = FactoryBot.create(:course)
+      q = FactoryBot.create(:multi_choice_question, :course => c, :qcontent => %w{one two three})
+      p = q.new_poll(:round => 1, :isopen => false)
+      q.save!
+      1.upto(10) do |i|
+        s = FactoryBot.create(:student)
+        c.students << s
+        r = p.new_response(:response => "two", :user => s)
+        r.save!
+      end
+      expect(p.responses).to eq({"two" => 10, "one" => 0, "three" => 0})
+    end
+
+    it "should give a hash of responses for free response polls" do
+      c = FactoryBot.create(:course)
+      q = FactoryBot.create(:free_response_question, :course => c)
+      p = q.new_poll(:round => 1, :isopen => false)
+      q.save!
+      1.upto(10) do |i|
+        s = FactoryBot.create(:student)
+        c.students << s
+        r = p.new_response(:response => "test", :user => s)
+        r.save!
+      end
+      expect(p.responses).to eq({"test" => 10})
+    end
+  end
 end

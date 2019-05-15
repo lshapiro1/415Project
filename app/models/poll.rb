@@ -24,8 +24,7 @@ class MultiChoicePoll < Poll
     h = self.poll_responses.group(:response).count
     opts = self.question.qcontent
     0.upto(opts.length-1) do |i|
-      count = h[i.to_s].to_i
-      outhash[opts[i]] = count
+      outhash[opts[i]] = h[opts[i]].to_i
     end
     outhash
   end
