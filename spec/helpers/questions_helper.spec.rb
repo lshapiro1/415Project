@@ -12,4 +12,19 @@ RSpec.describe QuestionsHelper, type: :helper do
       expect(question_types).to eq(%w{NumericQuestion MultiChoiceQuestion FreeResponseQuestion})
     end
   end
+
+  describe "image helper" do
+    it "should return nil if no image" do
+      c = FactoryBot.create(:course)
+      q = FactoryBot.create(:numeric_question, :course => c)
+      expect(show_image(q.image)).to be nil
+    end
+
+    it "should return an image tag if an image exists" do
+      c = FactoryBot.create(:course)
+      q = FactoryBot.create(:numeric_question, :course => c)
+      q.image.attach(io: File.open("testimg.png"), filename: "test.png")
+      expect(show_image(q.image)).to match(/^<img/)
+    end
+  end
 end

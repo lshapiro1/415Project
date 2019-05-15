@@ -10,6 +10,11 @@ class PollResponsesController < ApplicationController
     @question = Question.find(params[:question_id])
     @poll = Poll.find(params[:poll_id])
 
+    if !@poll.isopen
+      flash[:alert] = "Poll is not open"
+      redirect_to course_path(@course) and return
+    end
+
     r = @poll.poll_responses.where(:user => current_user).first
     if !r
       r = @poll.new_response(:user => current_user)

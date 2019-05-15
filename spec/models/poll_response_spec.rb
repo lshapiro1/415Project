@@ -39,7 +39,7 @@ RSpec.describe PollResponse, type: :model do
       p.save
       r = p.new_response(:response => "two")
       r.save
-      expect(r.response).to eq(1)
+      expect(r.response).to eq("two")
     end
   end
 end

@@ -58,7 +58,7 @@ RSpec.feature "PollActivates", type: :feature do
       choose "response_two"
       click_on "Submit answer"
       expect(page.current_path).to eq(course_path(c))
-      expect(PollResponse.find(1).response).to eq(1)
+      expect(PollResponse.find(1).response).to eq("two")
     end
 
     it "update an multiple choice question with another response" do
@@ -77,12 +77,12 @@ RSpec.feature "PollActivates", type: :feature do
       choose "response_two"
       click_on "Submit answer"
       expect(page.current_path).to eq(course_path(c))
-      expect(PollResponse.find(1).response).to eq(1)
+      expect(PollResponse.find(1).response).to eq("two")
 
       choose "response_four"
       click_on "Submit answer"
       expect(page.current_path).to eq(course_path(c))
-      expect(PollResponse.find(1).response).to eq(3)
+      expect(PollResponse.find(1).response).to eq("four")
     end
 
     it "no poll should be visible if none are active" do
