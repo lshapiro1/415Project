@@ -4,6 +4,13 @@ module QuestionsHelper
     $1.downcase
   end
 
+  def question_icon(t)
+    t =~ /^(\w+)Question$/ 
+    t = $1.downcase.to_sym
+    icons = {'multichoice': 'list-ordered', 'numeric': 'graph', 'freeresponse': 'quote'}
+    icons[t]
+  end
+
   def question_types
     %w{MultiChoiceQuestion NumericQuestion FreeResponseQuestion}
   end

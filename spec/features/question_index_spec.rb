@@ -12,7 +12,7 @@ RSpec.feature "QuestionIndices", type: :feature do
       q.save
       visit course_questions_path(c)
       ymd = Time.now.strftime "%Y/%m/%d"
-      expect(page.text).to match(/Q1.*numeric.*#{ymd}/i)
+      expect(page.text).to match(/Q1.*#{ymd}/i)
     end
   end
 end

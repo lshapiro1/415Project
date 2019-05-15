@@ -1,5 +1,5 @@
 #main
-  %table
+  %table.table
     %tr
       %th Name
       %th Meeting times
@@ -7,8 +7,8 @@
         %th # Students
     -@courses.each do |c|
       %tr
-        %td= link_to c.name, course_path(c)
+        %td= link_to c.name, course_path(c), :class => "btn btn-light"
         %td= c.daytime
         -if !current_user.student?
-          %td= c.students.count
+          %td= "#{c.students.count} FIXME: link to student report"
 

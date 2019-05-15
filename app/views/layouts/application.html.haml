@@ -9,14 +9,23 @@
     = javascript_include_tag 'application'
 
   %body
-    #flash
-      %p.notice= flash[:notice] if flash[:notice]
-      %p.alert= flash[:alert] if flash[:alert]
-      %p.alert= flash[:warning] if flash[:warning]
+    .container-fluid.px-md-5.flash
+      -if flash.keys.length
+        #flash.row.alert
+          -if flash[:notice]
+            .col-med.notice= flash[:notice] 
+          -if flash[:alert]
+            .col-med.alert= flash[:alert] 
+          -if flash[:warning]
+            .col-med.alert= flash[:warning] 
 
-    #auth
       -if user_signed_in?
-        %p= "Hello, #{current_user.email}."
-        %p= link_to "Sign out", destroy_user_session_path, :method => :delete
+        #auth
+          .row.p-3.bg-primary.text-white
+            .col-10
+              %span.smile= octicon "smiley", :height => 32
+              %span.smile.font-weight-bolder Hello,
+              %span.smile= "#{current_user.email}."
+            .col-2= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => "btn btn-light"
 
-    = yield
+      = yield

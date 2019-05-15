@@ -41,8 +41,13 @@ RSpec.feature "CourseIndices", type: :feature do
       expect(page.current_path).to eq(course_path(c2))
       expect(page.text).to match(/no current poll/i)
 
+      allow(Time).to receive(:now) { Time.new(2019, 5, 15, 9, 0, 0, "-05:00") }
       visit course_path(10000)
       expect(page.current_path).to eq(courses_path)
+
+      allow(Time).to receive(:now) { Time.new(2019, 5, 15, 10, 52, 0, "-05:00") }
+      visit course_path(10000)
+      expect(page.current_path).to eq(course_path(c2))
     end
 
     it "should allow an admin to see course details" do

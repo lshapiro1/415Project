@@ -28,11 +28,22 @@ RSpec.feature "NewQuestions", type: :feature do
       expect(page.text).to match(/qcontent missing newline-separated options for multichoice question/i)
     end
 
-    it "should succeed if qname is included for numeric/free response" do
+    it "should succeed if qname is included for numeric response" do
       visit course_questions_path(@c)
       click_on "Create a new question"
       fill_in "question_qname", :with => "NEWQ"
       select "NumericQuestion", from: "question_type"
+      click_on "Create question"
+      expect(page.current_path).to eq(course_questions_path(@c))
+      expect(page.text).to match(/NEWQ/)
+    end
+
+    it "should succeed if qname and image are included for free response" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      fill_in "question_qname", :with => "NEWQ"
+      select "FreeResponseQuestion", from: "question_type"
+      attach_file('Image', 'testimg.png')
       click_on "Create question"
       expect(page.current_path).to eq(course_questions_path(@c))
       expect(page.text).to match(/NEWQ/)

@@ -20,6 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'haml'
 gem 'haml-rails'
 gem 'mini_magick'
+gem 'octicons_helper'
 
 gem 'devise'
 gem 'omniauth-google-oauth2'
