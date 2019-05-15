@@ -13,7 +13,10 @@
               =question_input(@question, @current) 
               =submit_tag "Submit answer" 
       -else
-        %h3.card-title No current poll
+        %h3.card-title
+          %span= octicon "watch", :height => 32
+          %span Hang on ... 
+        %p.card-text no question is active right now
 
   %br
   %p#refresh= link_to "Refresh", course_path(@course), :class => "btn btn-primary"
