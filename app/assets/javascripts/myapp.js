@@ -9,6 +9,10 @@ var ICQ = (function() {
                     jQuery("#question_qcontent").hide();
                 }
             });
+
+            jQuery("#responseunfold").on('click', function() {
+                jQuery("#responses").toggle();
+            });
         },
     }
 

@@ -1,14 +1,22 @@
 #main
+  %nav{:"aria-label" => "breadcrumb"}
+    %ol.breadcrumb
+      %li.breadcrumb-item= link_to "Courses", courses_path
+      %li.breadcrumb-item= link_to @course.name, course_path(@course)
+      %li.breadcrumb-item.active Question details
+
   .card
     .card-body
       .card-header
-        %h5.card-title= "#{@question.qname} (#{@course.name})"
-        %h6.card-subtitle
-          %span= octicon question_icon(@question.type), :height => 18
-          %span= "#{question_type(@question.type)} question"
+        %h5.card-title= @question.qname
+        %ul.list-group.list-group-flush
+          %li.list-group-item= @course.name
+          %li.list-group-item
+            %span= octicon question_icon(@question.type), :height => 18
+            %span= "#{question_type(@question.type)} question"
   
   -if @question.image.attached?
-    %p= image_tag @question.image.variant(resize: "480x480^")
+    %p= image_tag @question.image.variant(resize: "480x480^"), :width => "90%"
 
   %table.table
     %tr
@@ -29,6 +37,4 @@
 
 #bottom
   %p= link_to "New poll", course_question_polls_path(@course, @question), method: :post, :class => "btn btn-primary"
-  %p= link_to "Back to #{@course.name} questions", course_questions_path(@course), :class => "btn btn-primary"
-  %p= link_to "Back to all courses", courses_path, :class => "btn btn-primary"
 

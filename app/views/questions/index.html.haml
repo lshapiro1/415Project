@@ -1,4 +1,8 @@
 #main
+  %ol.breadcrumb
+    %li.breadcrumb-item= link_to "Courses", courses_path
+    %li.breadcrumb-item.active= @course.name
+
   .card
     .card-body
       %h5.card-title= @course.name
@@ -26,6 +30,4 @@
 
   #bottom
     %p= link_to "Create a new question", new_course_question_path(@course), :class => "btn btn-primary"
-    %p= link_to "Back to all courses", courses_path, :class => "btn btn-primary"
-
 

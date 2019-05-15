@@ -1,24 +1,30 @@
 #main
+  %ol.breadcrumb
+    %li.breadcrumb-item= link_to "Courses", courses_path
+    %li.breadcrumb-item= link_to @course.name, course_path(@course)
+    %li.breadcrumb-item= link_to "All polls", course_question_polls_path(@course, @question)
+    %li.breadcrumb-item.active Poll details
+
   .card
     .card-body
       .card-header
         %h5.card-title= "Poll round #{@poll.round} for \"#{@question.qname}\" (#{@course.name})"
         %h6.card-subtitle
           %span= octicon question_icon(@question.type), :height => 18
-          %span= "#{question_type(@question.type)} question"
+          %span= "#{question_type(@question.type)} question --- "
+          -if @poll.isopen
+            %span.badge.badge-success open
+          -else
+            %span.badge.badge-danger closed
 
       %hr
 
       .card-body
-        -if @poll.isopen
-          %h3= @question.prompt
-        -else
-          %h3 Poll closed
-
+        %h3= @question.prompt
         -if @question.qcontent.is_a? Array
           %ul.list-group.list-group-flush
-          -@question.qcontent.each_with_index do |opt, idx|
-            %li.list-group-item= "#{idx+1}. #{opt}"
+          -@question.qcontent.each do |opt|
+            %li.list-group-item= "#{opt}"
 
   %br
   .row
@@ -41,7 +47,3 @@
   %br
 
 #bottom
-  %p= link_to "Back to all polls for this question", course_question_polls_path(@course, @question), :class => "btn btn-primary"
-  %p= link_to "Back to #{@course.name} questions", course_questions_path(@course), :class => "btn btn-primary"
-  %p= link_to "Back to all courses", courses_path, :class => "btn btn-primary"
-
