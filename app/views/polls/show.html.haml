@@ -34,8 +34,10 @@
   %br
   %div
     %h5
+      %span= link_to octicon("sync", :height => 32), course_question_poll_path(@course, @question, @poll), :remote => true, :id => "responsesync"
       %span= octicon "unfold", :height => 32, :id => "responseunfold"
-      %span Responses
+      %span Responses:
+      %span#responsecount= @poll.responses.count
     #responses.hidden
       %table.table
         -@poll.responses.each_pair do |v,count| 

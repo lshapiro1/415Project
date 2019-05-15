@@ -9,16 +9,17 @@
     = javascript_include_tag 'application'
 
   %body
-    .container-fluid.px-md-5.flash
+    .container-fluid.px-md-5
+      #jsflash.row
       -if flash.keys.length
         -if flash[:notice]
-          .row.alert.alert-info
+          #railsflash.row.alert.alert-info
             .col-med= flash[:notice] 
         -if flash[:alert]
-          .row.alert.alert-danger
+          #railsflash.row.alert.alert-danger
             .col-med= flash[:alert] 
         -if flash[:warning]
-          .row.alert.alert-warning
+          #railsflash.row.alert.alert-warning
             .col-med= flash[:warning] 
 
       -if user_signed_in?
