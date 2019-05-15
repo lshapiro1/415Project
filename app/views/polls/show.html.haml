@@ -26,13 +26,19 @@
       .col-2= link_to "Stop poll", course_question_poll_path(@course, @question, @poll), :method => :put, :class => "btn btn-warning"
 
   %br
-  #responses
-    %h4 Responses
-    %table.table
-      -@poll.responses.each_pair do |v,count| 
-        %tr{:class => row_class(@question, v)}
-          %th= v
-          %td= count
+  %div
+    %h5
+      %span= octicon "unfold", :height => 32, :id => "responseunfold"
+      %span Responses
+    #responses.hidden
+      %table.table
+        -@poll.responses.each_pair do |v,count| 
+          %tr{:class => row_class(@question, v)}
+            %th= v
+            %td= count
+
+  %br
+  %br
 
 #bottom
   %p= link_to "Back to all polls for this question", course_question_polls_path(@course, @question), :class => "btn btn-primary"
