@@ -1,7 +1,7 @@
 module QuestionsHelper
   def question_type(t)
     t =~ /^(\w+)Question$/ 
-    $1.downcase
+    $1.capitalize
   end
 
   def question_icon(t)

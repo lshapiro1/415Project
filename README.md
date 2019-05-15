@@ -37,9 +37,10 @@ App flow
 
 # Next
 
+ * javascript submit for student question
+ * javascript data retrieval/display for responses
+   * Put poll response data in easy to collect tags for plotting w/d3js
  * Admin dashboard: need to add answer and show dashboard of what's correct
- * Put poll response data in easy to collect tags for plotting w/d3js
- * Make it look better
 
 ---
  
