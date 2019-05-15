@@ -35,11 +35,11 @@ RSpec.feature "CourseIndices", type: :feature do
 
       visit course_path(c1)
       expect(page.current_path).to eq(course_path(c1))
-      expect(page.text).to match(/no current poll/i)
+      expect(page.text).to match(/no question/i)
 
       visit course_path(c2)
       expect(page.current_path).to eq(course_path(c2))
-      expect(page.text).to match(/no current poll/i)
+      expect(page.text).to match(/no question/i)
 
       allow(Time).to receive(:now) { Time.new(2019, 5, 15, 9, 0, 0, "-05:00") }
       visit course_path(10000)

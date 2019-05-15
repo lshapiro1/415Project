@@ -97,7 +97,7 @@ RSpec.feature "PollActivates", type: :feature do
       c.students << student
       sign_in student
       visit course_path(c)
-      expect(page.text).to match(/no current/i)
+      expect(page.text).to match(/no question/i)
     end      
   end
 end
