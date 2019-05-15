@@ -1,23 +1,41 @@
 #main
-  %h3= @course.name
-  %p= "Poll #{@poll.round}"
+  .card
+    .card-body
+      .card-header
+        %h5.card-title= "Poll round #{@poll.round} for \"#{@question.qname}\" (#{@course.name})"
+        %h6.card-subtitle
+          %span= octicon question_icon(@question.type), :height => 18
+          %span= "#{question_type(@question.type)} question"
 
-  =render partial: 'poll'
+      %hr
 
+      .card-body
+        -if @poll.isopen
+          %h3= @question.prompt
+        -else
+          %h3 Poll closed
 
-  -if @poll.isopen
-    %p= link_to "Stop poll", course_question_poll_path(@course, @question, @poll), :method => :put
+        -if @question.qcontent.is_a? Array
+          %ul.list-group.list-group-flush
+          -@question.qcontent.each_with_index do |opt, idx|
+            %li.list-group-item= "#{idx+1}. #{opt}"
 
-#responses
-  %h4 Responses
-  %table.table
-    -@poll.responses.each_pair do |v,count| 
-      %tr{:class => row_class(@question, v)}
-        %th= v
-        %td= count
+  %br
+  .row
+    -if @poll.isopen
+      .col-2= link_to "Stop poll", course_question_poll_path(@course, @question, @poll), :method => :put, :class => "btn btn-warning"
+
+  %br
+  #responses
+    %h4 Responses
+    %table.table
+      -@poll.responses.each_pair do |v,count| 
+        %tr{:class => row_class(@question, v)}
+          %th= v
+          %td= count
 
 #bottom
-  %p= link_to "Back to polls", course_question_polls_path(@course, @question)
-  %p= link_to "Back to questions", course_questions_path(@course)
-  %p= link_to "Back to courses", courses_path
+  %p= link_to "Back to all polls for this question", course_question_polls_path(@course, @question), :class => "btn btn-primary"
+  %p= link_to "Back to #{@course.name} questions", course_questions_path(@course), :class => "btn btn-primary"
+  %p= link_to "Back to all courses", courses_path, :class => "btn btn-primary"
 

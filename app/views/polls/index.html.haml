@@ -1,13 +1,18 @@
 #main
-  %h2= @course.name
-  %h3= @question.qname
-  %p= "#{question_type(@question.type)} question"
+  .card
+    .card-body
+      .card-header
+        %h5.card-title= "#{@question.qname} (#{@course.name})"
+        %h6.card-subtitle
+          %span= octicon question_icon(@question.type), :height => 18
+          %span= "#{question_type(@question.type)} question"
+  
   -if @question.image.attached?
     %p= image_tag @question.image.variant(resize: "480x480^")
 
   %table.table
     %tr
-      %th Number
+      %th Poll round
       %th When
       %th Open?
       %th Responses
@@ -15,15 +20,15 @@
 
     -@polls.each do |p|
       %tr
-        %td= link_to p.round, course_question_poll_path(@course, @question, p)
+        %td= link_to p.round, course_question_poll_path(@course, @question, p), :class => "btn btn-light"
         %td= "#{time_ago_in_words(p.updated_at)} ago"
         %td= p.isopen ? "yes" : "no"
         %td= p.poll_responses.count
-        %td= link_to "Delete", course_question_poll_path(@course, @question, p), method: :delete
+        %td= link_to "Delete", course_question_poll_path(@course, @question, p), method: :delete, :class => "btn btn-danger"
 
-  %p= link_to "New poll", course_question_polls_path(@course, @question), method: :post
 
 #bottom
-  %p= link_to "Back to questions", course_questions_path(@course)
-  %p= link_to "Back to courses", courses_path
+  %p= link_to "New poll", course_question_polls_path(@course, @question), method: :post, :class => "btn btn-primary"
+  %p= link_to "Back to #{@course.name} questions", course_questions_path(@course), :class => "btn btn-primary"
+  %p= link_to "Back to all courses", courses_path, :class => "btn btn-primary"
 

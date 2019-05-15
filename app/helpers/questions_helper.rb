@@ -21,19 +21,20 @@ module QuestionsHelper
       when "MultiChoiceQuestion"
         s = ""
         q.qcontent.each do |opt|
-          s += label_tag(opt)
-          h = {}
+          h = {:class => "form-check-input"}
           # FIXME: doesn't work
           if opt==curr 
             h[:checked]='checked'
           end
-          s += radio_button_tag('response', opt, **h)
+          t = radio_button_tag('response', opt, **h)
+          t += label_tag(opt)
+          s = s + "<div class='form-check'>" + t + "</div>"
         end
         s.html_safe
       when "NumericQuestion"
-        number_field_tag :response, curr, :step => 0.01
+        number_field_tag :response, curr, :step => 0.01, :class => "form-control"
       when "FreeResponseQuestion"
-        text_field_tag :response, curr
+        text_field_tag :response, curr, :class => "form-control"
     end
   end
 

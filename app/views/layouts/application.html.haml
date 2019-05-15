@@ -11,21 +11,23 @@
   %body
     .container-fluid.px-md-5.flash
       -if flash.keys.length
-        #flash.row.alert
-          -if flash[:notice]
-            .col-med.notice= flash[:notice] 
-          -if flash[:alert]
-            .col-med.alert= flash[:alert] 
-          -if flash[:warning]
-            .col-med.alert= flash[:warning] 
+        -if flash[:notice]
+          .row.alert.alert-info
+            .col-med= flash[:notice] 
+        -if flash[:alert]
+          .row.alert.alert-danger
+            .col-med= flash[:alert] 
+        -if flash[:warning]
+          .row.alert.alert-warning
+            .col-med= flash[:warning] 
 
       -if user_signed_in?
         #auth
           .row.p-3.bg-primary.text-white
-            .col-10
+            .col-9
               %span.smile= octicon "smiley", :height => 32
               %span.smile.font-weight-bolder Hello,
               %span.smile= "#{current_user.email}."
-            .col-2= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => "btn btn-light"
+            .col-3= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => "btn btn-light"
 
       = yield
