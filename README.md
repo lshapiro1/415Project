@@ -37,10 +37,16 @@ App flow
 
 # Next
 
- * Improve poll display; show answer on plot
  * Admin dashboard: need to add answer and show dashboard of what's correct
  * Need magic route to create + activate question
  * Need to add cable/websockets
+   Alternatively:
+    On client course show: timer expires every second (d3.timer)
+    Send current course, question, poll values to server w/AJAX:
+        return: open, closed, refresh
+        on open, do nothing
+        on closed, show blocked
+        on refresh, reload page
 
 ---
  
