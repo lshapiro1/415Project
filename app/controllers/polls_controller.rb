@@ -16,7 +16,7 @@ class PollsController < ApplicationController
     end
   end
 
-  def poll_status
+  def status
     @course = Course.find(params[:course_id])
     @question = Question.find(params[:question_id])
     @poll = Poll.find(params[:id])
