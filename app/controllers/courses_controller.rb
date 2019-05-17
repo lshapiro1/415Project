@@ -42,6 +42,11 @@ class CoursesController < ApplicationController
       redirect_to course_path(@course) and return
     end
 
+    if question.nil?
+      flash[:notice] = "No question text given!"
+      redirect_to course_path(@course) and return
+    end
+
     @question = qt.send(:new)
     @question.qname = question
     if t == 'm'

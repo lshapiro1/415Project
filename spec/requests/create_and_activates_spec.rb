@@ -3,6 +3,34 @@ require 'rails_helper'
 RSpec.describe "CreateAndActivates", type: :request do
   include Devise::Test::IntegrationHelpers
 
+  describe "create and update" do
+    it "should redirect for bad course" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      get '/x'
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(courses_path)
+    end
+
+    it "should redirect for bad question type" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course, :name => "TEST")
+      get '/x', :params => { 'c' => 'TEST' }
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(course_path(c))
+    end
+
+    it "should redirect with good question type but no question" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course, :name => "TEST")
+      get '/x', :params => { 'c' => 'TEST', 't' => 'n' }
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(course_path(c))
+    end
+  end
+
   describe "XHR requests" do
     it "should be successful with appropriate info in the POST" do
       s = FactoryBot.create(:student)
