@@ -37,9 +37,11 @@
       %span= link_to octicon("sync", :height => 32), course_question_poll_path(@course, @question, @poll), :remote => true, :id => "responsesync"
       %span= octicon "unfold", :height => 32, :id => "responseunfold"
       %span Responses:
-      %span#responsecount= @poll.responses.count
+      %span#responsecount= @poll.responses.values.inject(:+)
     #responses.hidden
-      %table.table
+      #plotspace
+      %br
+      -#%table.table
         -@poll.responses.each_pair do |v,count| 
           %tr{:class => row_class(@question, v)}
             %th= v
