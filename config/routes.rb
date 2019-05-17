@@ -7,5 +7,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  get '/courses/:course_id/questions/:question_id/polls/:id/status', :to => 'polls#status', :as => :poll_status
+  get '/x', :to => 'courses#create_and_activate'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 end

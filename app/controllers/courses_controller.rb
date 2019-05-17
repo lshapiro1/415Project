@@ -24,6 +24,14 @@ class CoursesController < ApplicationController
     end
   end
 
+  def create_and_activate
+    question = params[:q]
+    course = params[:c]
+    numopts = params[:n]
+    qtype = params[:t] || 'm'
+   # http://localhost:3000/x?q=What%20will%20these%20rules%20do?&c=COSC101S19&n=4`
+  end
+
 private
   def go_to_current_course
     cassoc = current_user.admin ? Course.all : current_user.courses

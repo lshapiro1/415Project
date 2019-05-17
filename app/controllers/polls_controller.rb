@@ -16,6 +16,24 @@ class PollsController < ApplicationController
     end
   end
 
+  def poll_status
+    @course = Course.find(params[:course_id])
+    @question = Question.find(params[:question_id])
+    @poll = Poll.find(params[:id])
+    if !request.xhr?
+        redirect_to course_question_poll_path(@course, @question, @poll) and return
+    end
+    p = @course.active_poll     
+    status = if @poll.isopen
+      'open'
+    elsif p.nil?
+      'closed'
+    else
+      'refresh'
+    end
+    render json: {'status': status}
+  end
+
   def create
     @course = Course.find(params[:course_id])
     @question = Question.find(params[:question_id])
