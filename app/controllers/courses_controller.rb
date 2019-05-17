@@ -25,10 +25,47 @@ class CoursesController < ApplicationController
   end
 
   def create_and_activate
-    question = params[:q]
     course = params[:c]
-    numopts = params[:n]
-    qtype = params[:t] || 'm'
+    question = params[:q]
+    numopts = params[:n].to_i
+    t = params[:t] || 'm' # m, n, f
+    @course = Course.where(:name => course).first
+    if !@course
+      flash[:notice] = "Course #{course} doesn't exist"
+      redirect_to courses_path and return
+    end
+
+    qtypes = {'m': MultiChoiceQuestion, 'n': NumericQuestion, 'f': FreeResponseQuestion }
+    qt = qtypes[t]
+    if qt.nil?
+      flash[:notice] = "Question type #{params[:t]} doesn't exist"
+      redirect_to course_path(@course) and return
+    end
+
+    @question = qt.send(:new)
+    @question.qname = question
+    if t == 'm'
+      @question.qcontent = alpha.split(//)[0...numopts]
+    end
+    @course.questions << @question
+    if !@question.save
+      flash[:alert] = "Failed to save question #{question}"
+      redirect_to course_questions_path(@course) and return
+    end
+
+    # close all other polls
+    Poll.closeall(@course)
+    num = @question.polls.maximum(:round).to_i
+    @poll = @question.new_poll
+    @poll.isopen = true
+    @poll.round = num + 1
+    if !@poll.save
+      flash[:alert] = "Failed to save poll for question #{question}"
+      redirect_to course_question_path(@course, @question) and return
+    end
+
+    flash[:notice] = "Started new poll"
+    redirect_to course_question_poll_path(@course, @question, @poll) and return
    # http://localhost:3000/x?q=What%20will%20these%20rules%20do?&c=COSC101S19&n=4`
   end
 
