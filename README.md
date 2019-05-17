@@ -37,10 +37,10 @@ App flow
 
 # Next
 
- * javascript submit for student question
- * javascript data retrieval/display for responses
-   * Put poll response data in easy to collect tags for plotting w/d3js
+ * Improve poll display; show answer on plot
  * Admin dashboard: need to add answer and show dashboard of what's correct
+ * Need magic route to create + activate question
+ * Need to add cable/websockets
 
 ---
  

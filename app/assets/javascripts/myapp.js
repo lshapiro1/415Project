@@ -1,6 +1,6 @@
 var ICQ = (function() {
 
-    var freeresponse_show = function(data) {
+    var freeresponse_show = function(data, answer) {
         var arr = [];
         for (var key in data) {
             arr.push([key, data[key]]);
@@ -28,7 +28,7 @@ var ICQ = (function() {
         return arr;
     };
 
-    var boxwhiskers = function(data) {
+    var boxwhiskers = function(data, answer) {
         var arr = mkarray(data);
         var height = 300;
         var width = 300;
@@ -39,8 +39,25 @@ var ICQ = (function() {
         var low = d3.quantile(arr, 0.05);
         var high = d3.quantile(arr, 0.95);
 
+        var aval = answer;
+        if (answer === null) {
+            aval = arr[0];
+        }
+        aval = +aval;
+
         var minv = d3.min(arr);
+        minv = aval < minv ? aval : minv;
         var maxv = d3.max(arr);
+        maxv = aval > maxv ? aval : maxv;
+        var range = maxv-minv;
+        minv = minv - range*0.1;
+        maxv = maxv + range*0.1;
+        /*
+        console.log(minv);
+        console.log(maxv);
+        console.log(median);
+        */
+
         var y = d3.scaleLinear().
             domain([minv-minv*0.05, maxv+maxv*0.05]).
             range([height, 0]);
@@ -50,14 +67,8 @@ var ICQ = (function() {
             attr("width", width).
             attr("height", height);
         
+        // box
         var color = d3.schemeCategory10[0];
-        // svg.append("svg:rect").
-        //     attr("x", 100).
-        //     attr("y", y(boxmin)).
-        //     attr("width", 100).
-        //     attr("height", y(boxmax-boxmin)).
-        //     attr("stroke", "black").
-        //     attr("fill", color);
         var box = d3.path();
         box.moveTo(100, y(boxmin));
         box.lineTo(200, y(boxmin));
@@ -67,21 +78,36 @@ var ICQ = (function() {
         box.closePath();
         svg.append("path").attr("d", box).attr("stroke", color).attr("fill", "none");
 
+        // bottom whisker
         var lower = d3.path();
         lower.moveTo(150, y(low));
         lower.lineTo(150, y(boxmin));
         lower.closePath();
+        // top whisker
         var upper = d3.path();
         upper.moveTo(150, y(boxmax));
         upper.lineTo(150, y(high));
         upper.closePath();
         svg.append("path").attr("d", upper).attr("stroke", "blue");
-        svg.append("path").attr("d", lower).attr("stroke", "green");
+        svg.append("path").attr("d", lower).attr("stroke", "blue");
+        // median line
         var midline = d3.path();
         midline.moveTo(100, y(median));
         midline.lineTo(200, y(median));
         midline.closePath();
         svg.append("path").attr("d", midline).attr("stroke", "red");
+        // answer line
+        if (answer !== null) {
+            var ansline = d3.path();
+            ansline.moveTo(50, y(answer));
+            ansline.lineTo(250, y(answer));
+            ansline.closePath();
+            svg.append("path").
+                classed("answer", true).
+                style("display", "none").
+                attr("d", ansline).
+                attr("stroke", "green");
+        }
 
         var axis = d3.axisRight(y);
         svg.append("g").
@@ -98,13 +124,23 @@ var ICQ = (function() {
         return arr;
     }
 
-    var horizontal_bar = function(data) {
+    var horizontal_bar = function(data, answer) {
         var barHeight = 40;
         var data = reformat_data(data);
-        var height = (barHeight + 25) * data.length;
+        var dlen = data.length;
+        var height = (barHeight + 25) * dlen;
         var width = 400;
+        var ansindex = -1;
+        if (answer !== null) {
+            for (var i = 0; i < dlen; i++) {
+                if (answer === data[i].option) {
+                    ansindex = i;
+                    break;
+                }
+            }
+        }
 
-        var y = d3.scaleLinear().domain([0, data.length]).range([0, height]);
+        var y = d3.scaleLinear().domain([-0.5, dlen]).range([0, height]);
         var x = d3.scaleLinear().domain([0, d3.max(data, function(datum) { return datum.value; })*1.2]).rangeRound([0, width]);
 
         var svg = d3.select("#plotspace").
@@ -141,8 +177,8 @@ var ICQ = (function() {
             attr("y", function(datum, index) { return y(index) + barHeight; }).
             attr("x", width*0.05).
             attr("dy", -barHeight/2).
-            attr("text-anchor", "middle").
-            attr("style", "font-size: 12; font-family: Helvetica, sans-serif").
+            attr("text-anchor", "left").
+            attr("style", "font-size: 14; font-family: Helvetica, sans-serif").
             text(function(datum) { return datum.option; }).
             attr("class", "yAxis").
             attr("fill", "black");
@@ -153,6 +189,18 @@ var ICQ = (function() {
             attr("stroke", "black").
             attr("transform", "translate(0, "+ymove+")").
             call(axis);
+
+        if (ansindex > -1) {
+            var ansline = d3.path();
+            ansline.arc(5, y(ansindex+0.4), 5, 0, 360);
+            ansline.closePath();
+            svg.append("path").
+                classed("answer", true).
+                style("display", "none").
+                attr("d", ansline).
+                attr("fill", "black").
+                attr("stroke", "black");
+        }
     };
 
     var student_response_handler = function(ev) {
@@ -173,7 +221,7 @@ var ICQ = (function() {
       console.log(data);
       var plotfn = {"MultiChoicePoll": horizontal_bar, "NumericPoll": boxwhiskers, "FreeResponsePoll": freeresponse_show};
       jQuery("#plotspace > svg").remove();
-      plotfn[data.type](data.responses);
+      plotfn[data.type](data.responses, data.answer);
     };
 
     return {
@@ -185,9 +233,11 @@ var ICQ = (function() {
                     jQuery("#question_qcontent").hide();
                 }
             });
-
             jQuery("#responseunfold").on('click', function() {
                 jQuery("#responses").toggle();
+            });
+            jQuery("#showanswer").on('click', function() {
+                jQuery(".answer").toggle();
             });
             jQuery("#new_free_response_poll_response").on('ajax:success', student_response_handler);
             jQuery("#new_multi_choice_poll_response").on('ajax:success', student_response_handler);

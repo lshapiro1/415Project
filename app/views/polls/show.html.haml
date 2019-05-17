@@ -36,6 +36,7 @@
     %h5
       %span= link_to octicon("sync", :height => 32), course_question_poll_path(@course, @question, @poll), :remote => true, :id => "responsesync"
       %span= octicon "unfold", :height => 32, :id => "responseunfold"
+      %span= octicon "check", :height => 32, :id => "showanswer"
       %span Responses:
       %span#responsecount= @poll.responses.values.inject(:+)
     #responses.hidden
