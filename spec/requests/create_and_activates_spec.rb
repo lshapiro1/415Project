@@ -25,9 +25,27 @@ RSpec.describe "CreateAndActivates", type: :request do
       s = FactoryBot.create(:admin)
       sign_in s
       c = FactoryBot.create(:course, :name => "TEST")
-      get '/x', :params => { 'c' => 'TEST', 't' => 'n' }
+      get '/x', :params => { 'c' => 'TEST', 't' => 'n'}
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(course_path(c))
+    end
+
+    it "should successfully create a numeric question and a new poll" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course, :name => "TEST")
+      get '/x', :params => { 'c' => 'TEST', 't' => 'n', 'q' => 'enter a number'}
+      expect(response).to have_http_status(:redirect)
+      expect(c.active_poll).not_to eq nil
+    end
+
+    it "should successfully create a numeric question and a new poll" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course, :name => "TEST")
+      get '/x', :params => { 'c' => 'TEST', 't' => 'm', 'q' => 'pick an option', 'n' => 4}
+      expect(response).to have_http_status(:redirect)
+      expect(c.active_poll).not_to eq nil
     end
   end
 

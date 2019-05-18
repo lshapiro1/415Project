@@ -29,13 +29,14 @@ class CoursesController < ApplicationController
     question = params[:q]
     numopts = params[:n].to_i
     t = params[:t] || 'm' # m, n, f
+    t = t.to_sym
     @course = Course.where(:name => course).first
     if !@course
       flash[:notice] = "Course #{course} doesn't exist"
       redirect_to courses_path and return
     end
 
-    qtypes = {'m': MultiChoiceQuestion, 'n': NumericQuestion, 'f': FreeResponseQuestion }
+    qtypes = {:m => MultiChoiceQuestion, :n => NumericQuestion, :f => FreeResponseQuestion }
     qt = qtypes[t]
     if qt.nil?
       flash[:notice] = "Question type #{params[:t]} doesn't exist"
