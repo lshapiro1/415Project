@@ -27,6 +27,8 @@ class CoursesController < ApplicationController
   def create_and_activate
     course = params[:c]
     question = params[:q]
+    answer = params[:a]
+    opts = params[:o]
     numopts = params[:n].to_i
     t = params[:t] || 'm' # m, n, f
     t = t.to_sym
@@ -49,11 +51,17 @@ class CoursesController < ApplicationController
     end
 
     @question = qt.send(:new)
+    @question.answer = answer
     @question.qname = question
-    if t == 'm'
-      @question.qcontent = alpha.split(//)[0...numopts]
+    if t == :m
+      if opts
+        @question.qcontent = opts
+      else
+        alpha = 'ABCDEFG'
+        @question.qcontent = alpha.split(//)[0...numopts]
+      end
     end
-    @course.questions << @question
+    @question.course = @course
     if !@question.save
       flash[:alert] = "Failed to save question #{question}"
       redirect_to course_questions_path(@course) and return
