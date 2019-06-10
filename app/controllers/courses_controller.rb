@@ -17,7 +17,15 @@ class CoursesController < ApplicationController
       if @poll
         @response = @poll.new_response
         @current = PollResponse.where(:poll => @poll, :user => current_user).first
+        @pid = @poll.id
+        @qid = @question.id
+        @qname = @question.qname
+      else
+        @pid = 0
+        @qid = 0
+        @qname = ""
       end
+      @activepoll = !!@poll
       render 'show_student'
     else
       redirect_to course_questions_path(@course) and return
@@ -85,6 +93,8 @@ class CoursesController < ApplicationController
 
 private
   def go_to_current_course
+    return if request.xhr?
+
     cassoc = current_user.admin ? Course.all : current_user.courses
     cassoc.each do |c|
       # if course is going on now, then return show page path for redirect

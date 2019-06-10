@@ -31,7 +31,7 @@ class PollsController < ApplicationController
     else
       'refresh'
     end
-    render json: {'status': status}
+    render json: {'status': status, 'path': course_path(@course) }
   end
 
   def create

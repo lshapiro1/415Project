@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create!(:email => 'jsommers@colgate.edu', :admin => true)
-u = User.create!(:email => 'sommersmeister@gmail.com')
+User.create!(:email => 'jsommers@colgate.edu', :admin => true, :password => "testtest")
+u = User.create!(:email => 'sommersmeister@gmail.com', :password => "testtest")
 c = Course.create!(:name => 'COSC 101A', :daytime => 'TR 8:30-9:45')
 c.students << u
 

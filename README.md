@@ -38,16 +38,20 @@ App flow
 # Next
 
  * Admin dashboard: need to add answer and show dashboard of what's correct
+   think about what sort of dashboards would be useful for admin or student
+
  * Need magic route to create + activate question
+   Done: should test from a notebook
+
  * Need to add cable/websockets
    Alternatively:
-    On client course show: timer expires every second (d3.timer)
-    Send current course, question, poll values to server w/AJAX:
-        return: open, closed, refresh
-        on open, do nothing
-        on closed, show blocked
-        on refresh, reload page
-
+     - need xhr route like /courses/:id/poll_status
+       - return 'closed' if no poll
+       - return 'open' with course/question/poll id of current
+       - if status has changed do xhr to get partial to fill in on page
+     - fire ajax request every second (d3.timer)
+     - can remove status on /course/question/poll --- this isn't useful anymore
+     - in course/:id/show_student need to factor out cards as partials
 ---
  
  Cable

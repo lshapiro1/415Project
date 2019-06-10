@@ -224,6 +224,29 @@ var ICQ = (function() {
       plotfn[data.type](data.responses, data.answer);
     };
 
+    var status_update = function(data, tstatus, jqxhr) {
+        console.log(data);
+        if (data.status == 'open') {
+            // do nothing
+        } else if (data.status == 'closed') { 
+            // FIXME
+        } else if (data.status == 'refresh') {
+            // FIXME
+            document.url = data.path;
+        }
+    };
+
+    var monitor_question_status = function(ids) {
+        var url = "/courses/" + ids[0] + "/questions/" + ids[1] + "/polls/" + ids[2] + "/status";
+        console.log(url);
+        jQuery.ajax({
+            'url': url,
+            'dataType': 'json',
+            'success': status_update,
+        });
+        // FIXME: refresh
+    };
+
     return {
         init: function() {
             jQuery("#question_type").on('change', function() {
@@ -243,6 +266,12 @@ var ICQ = (function() {
             jQuery("#new_multi_choice_poll_response").on('ajax:success', student_response_handler);
             jQuery("#new_numeric_response_poll_response").on('ajax:success', student_response_handler);
             jQuery("#responsesync").on('ajax:success', drawresponse);
+            if (document.getElementById("squestion") !== null) {
+                var ids = jQuery("#squestion").attr('data-ids').split(/ /);
+                if (ids.length == 3) {
+                    monitor_question_status(ids);
+                }
+            }
         },
     }
 

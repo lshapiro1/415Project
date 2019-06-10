@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
 protected
   def redirect_if_student
-    redirect_to courses_path if current_user.student?
+    redirect_to courses_path if current_user.student? && !request.xhr?
   end
 
   def invalid_id
