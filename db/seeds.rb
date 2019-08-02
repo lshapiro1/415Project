@@ -8,7 +8,7 @@
 
 User.create!(:email => 'jsommers@colgate.edu', :admin => true, :password => "testtest")
 u = User.create!(:email => 'sommersmeister@gmail.com', :password => "testtest")
-c = Course.create!(:name => 'COSC 101A', :daytime => 'TR 8:30-9:45')
+c = Course.create!(:name => 'COSC 101D', :daytime => 'TR 8:30-9:45')
 c.students << u
 
 Question.new # force loading model code
@@ -40,3 +40,5 @@ slist = []
   r = nump.new_response(:response => rand(10), :user => s)
   r.save!
 end
+
+c2 = Course.create!(:name => 'COSC 301A', :daytime => 'TR 9:55-11:10')
