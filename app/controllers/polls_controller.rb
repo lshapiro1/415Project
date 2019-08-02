@@ -23,15 +23,19 @@ class PollsController < ApplicationController
     if !request.xhr?
         redirect_to course_question_poll_path(@course, @question, @poll) and return
     end
+
     p = @course.active_poll     
-    status = if @poll.isopen
-      'open'
-    elsif p.nil?
+    q = @course.active_question
+    status_path = "/courses/#{@course.id}/questions/#{q ? q.id : 0}/polls/#{p ? p.id : 0}/status";
+
+    status = if p.nil?
       'closed'
+    elsif p && @poll && p.id == @poll.id
+      'open'
     else
       'refresh'
     end
-    render json: {'status': status, 'path': course_path(@course) }
+    render json: {'status': status, 'path': status_path }
   end
 
   def create
