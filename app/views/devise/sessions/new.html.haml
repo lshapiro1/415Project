@@ -2,10 +2,16 @@
 
 .row
   .col-med
-    %h2= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, :class => "btn btn-primary btn-lg"
+    %h2 In-class questions
+
+.row
+  .col-med
+    %h3= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, :class => "btn btn-primary btn-lg"
 
 %br
 %br
+
+%hr 
 
 .row
   .col-med
@@ -24,3 +30,8 @@
     .col-sm
       = f.submit "Log in"
 
+%hr 
+
+.row
+  .col-med
+    %h3= link_to "Research lab", "https://github.com/jsommers/metameasurement", :class => "btn btn-success"
