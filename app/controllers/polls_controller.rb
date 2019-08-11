@@ -1,3 +1,5 @@
+require 'gmail'
+
 class PollsController < ApplicationController
   before_action :redirect_if_student
 
@@ -15,6 +17,36 @@ class PollsController < ApplicationController
         render json: { responses: @poll.responses, type: @poll.type, answer: @poll.question.answer } and return
     end
   end
+
+  def notify
+    poll = Poll.find(params[:id])
+
+    user = ENV['GMAIL_USER']
+    pass = ENV['GMAIL_PASS']
+    if !(user && pass)
+      logger.info("No gmail user and password to notify")
+      return
+    end
+
+    subj = "Poll results: #{poll.question.qname}"
+    results = "#{poll.responses.to_s}"
+
+    Gmail.new(user, pass) do |gmail|
+      email = gmail.generate_message do
+        to "jsommersnz@gmail.com"
+        subject subj
+        body results
+      end
+      gmail.deliver(email)
+    end
+
+    if request.xhr?
+      logger.debug("notify")
+      render :json => { :done => true }
+      return
+    end
+  end
+
 
   def status
     @course = Course.find(params[:course_id])

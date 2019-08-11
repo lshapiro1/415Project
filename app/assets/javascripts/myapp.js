@@ -261,17 +261,13 @@ var ICQ = (function() {
             url = "/courses/" + ids[0] + "/status";
         }
 
-        /*
-        console.log(url);
-        console.log(ids);
-        */
         jQuery.ajax({
             'url': url,
             'dataType': 'json',
             'success': status_update,
         });
 
-        setTimeout(monitor_question_status, 500, ids);
+        setTimeout(monitor_question_status, 1000, ids);
     };
 
     return {
@@ -283,6 +279,19 @@ var ICQ = (function() {
                     jQuery("#question_qcontent").hide();
                 }
             });
+            jQuery("#notify").on('ajax:success', function() {
+                jQuery("#notify").removeClass("btn-warning");
+                jQuery("#notify").addClass("btn-primary");
+            });
+            jQuery("#notify").on('ajax:failure', function() {
+                jQuery("#notify").removeClass("btn-warning");
+                jQuery("#notify").addClass("border-danger");
+            });
+            jQuery("#notify").on('click', function() {
+                jQuery("#notify").removeClass("btn-primary");
+                jQuery("#notify").addClass("btn-warning");
+            });
+
             jQuery("#responseunfold").on('click', function() {
                 jQuery("#responses").toggle();
             });

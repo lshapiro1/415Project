@@ -24,6 +24,7 @@
       %th When
       %th Open?
       %th Responses
+      %th Notify
       %th Destroy
 
     -@polls.each do |p|
@@ -32,6 +33,7 @@
         %td= "#{time_ago_in_words(p.updated_at)} ago"
         %td= p.isopen ? "yes" : "no"
         %td= p.poll_responses.count
+        %td= link_to "Notify", poll_notify_path(p), method: :get, remote: true, :class => "btn btn-primary", :id => "notify"
         %td= link_to "Delete", course_question_poll_path(@course, @question, p), method: :delete, :class => "btn btn-danger"
 
 

@@ -28,6 +28,8 @@
 
   %br
   .row
+    .col-2= link_to "Notify", poll_notify_path(@poll), method: :get, remote: true, :class => "btn btn-primary", :id => "notify"
+
     -if @poll.isopen
       .col-2= link_to "Stop poll", course_question_poll_path(@course, @question, @poll), :method => :put, :class => "btn btn-warning"
 
@@ -42,6 +44,7 @@
     #responses.hidden
       #plotspace
       %br
+
       -#%table.table
         -@poll.responses.each_pair do |v,count| 
           %tr{:class => row_class(@question, v)}
