@@ -35,3 +35,4 @@
 KEYS.md
 
 /vendor/bundle
+yarn.lock
