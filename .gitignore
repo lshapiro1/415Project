@@ -33,3 +33,5 @@
 /coverage
 
 KEYS.md
+
+/vendor/bundle
