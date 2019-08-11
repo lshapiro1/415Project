@@ -43,13 +43,20 @@ App flow
  * Need magic route to create + activate question
    Done: should test from a notebook
 
+ * Need to fix/update response plotting
+
+ * Add notification to email
+
+
+
+
  * Need to add cable/websockets
    Alternatively:
      - need xhr route like /courses/:id/poll_status
        - return 'closed' if no poll
        - return 'open' with course/question/poll id of current
        - if status has changed do xhr to get partial to fill in on page
-     - fire ajax request every second (d3.timer)
+     - fire ajax request every second or so
      - can remove status on /course/question/poll --- this isn't useful anymore
      - in course/:id/show_student need to factor out cards as partials
 ---
