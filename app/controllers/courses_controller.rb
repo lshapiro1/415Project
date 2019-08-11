@@ -32,6 +32,27 @@ class CoursesController < ApplicationController
     end
   end
 
+  def status
+    @course = Course.find(params[:id])
+    logger.debug ("inside status")
+
+    if !request.xhr?
+      redirect_to course_path(params[:id]) and return
+    end
+
+    p = @course.active_poll     
+    q = @course.active_question
+    status_path = "/courses/#{@course.id}/questions/#{q ? q.id : 0}/polls/#{p ? p.id : 0}/status";
+
+    status = if p.nil?
+      status_path = "/courses/#{@course.id}"
+      'closed'
+    elsif p && !p.id.nil?
+      'open'
+    end
+    render json: {'status': status, 'path': status_path }
+  end
+
   def create_and_activate
     course = params[:c]
     question = params[:q]

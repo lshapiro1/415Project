@@ -29,11 +29,10 @@ class PollsController < ApplicationController
     status_path = "/courses/#{@course.id}/questions/#{q ? q.id : 0}/polls/#{p ? p.id : 0}/status";
 
     status = if p.nil?
+      status_path = "/courses/#{@course.id}"
       'closed'
     elsif p && @poll && p.id == @poll.id
       'open'
-    else
-      'refresh'
     end
     render json: {'status': status, 'path': status_path }
   end

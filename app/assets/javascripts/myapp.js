@@ -225,26 +225,53 @@ var ICQ = (function() {
     };
 
     var status_update = function(data, tstatus, jqxhr) {
+        /*
+        console.log("status update");
         console.log(data);
-        if (data.status == 'open') {
-            // do nothing
-        } else if (data.status == 'closed') { 
-            // FIXME
-        } else if (data.status == 'refresh') {
-            // FIXME
-            document.url = data.path;
+        */
+        if (ICQ.questionstatus === undefined) {
+           ICQ.questionstatus = data.status; 
         }
+
+        if (ICQ.questionstatus != data.status) {
+            console.log("Modifying location");
+            window.location = window.location.href;
+        }
+
+        /*
+        if (data.status == 'open') {
+            if (data.path != window.location.pathname) {
+              console.log("Modifying location");
+              // window.location = window.location.origin + data.path;
+            }
+        } else if (data.status == 'closed') { 
+            if (data.path != window.location.pathname) {
+              console.log("Modifying location");
+              window.location = window.location.origin + data.path;
+            }
+        } 
+        */
     };
 
     var monitor_question_status = function(ids) {
         var url = "/courses/" + ids[0] + "/questions/" + ids[1] + "/polls/" + ids[2] + "/status";
+
+        // if no question is active, question/poll ids are both 0
+        if (ids[1] == "0") {
+            url = "/courses/" + ids[0] + "/status";
+        }
+
+        /*
         console.log(url);
+        console.log(ids);
+        */
         jQuery.ajax({
             'url': url,
             'dataType': 'json',
             'success': status_update,
         });
-        // FIXME: refresh
+
+        setTimeout(monitor_question_status, 500, ids);
     };
 
     return {
@@ -276,5 +303,6 @@ var ICQ = (function() {
     }
 
 }());
+ICQ.questionstatus = undefined;
 
 jQuery(ICQ.init);
