@@ -15,6 +15,8 @@ c.students << u
 
 c2 = Course.create!(:name => 'COSC301F19', :daytime => 'TR 9:55-11:10')
 
+# dummy question seeds
+
 Question.new # force loading model code
 questions = []
 options = ["Syntax error", "Runtime error", "Logic error"]
@@ -30,6 +32,9 @@ nump = num.new_poll(:round => 1)
 nump.save!
 
 fr_resp = %w{this that other something nothing}
+
+# don't, by default, add dummy student seeds
+exit
 
 slist = []
 1.upto(10) do |i|

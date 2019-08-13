@@ -14,24 +14,24 @@
 
 %br
 
-%hr 
-
-.row
-  .col-med
-    %h5 Admin login
-
-= form_for(resource, id: :login, as: resource_name, url: session_path(resource_name)) do |f|
-  .row.form-group.small
-    = f.label :email, class: "col-form-label col-sm-1"
-    .col-sm
-      = f.email_field :email, autofocus: true, autocomplete: "email"
-  .row.form-group.small
-    = f.label :password, class: "col-form-label col-sm-1"
-    .col-sm
-      = f.password_field :password, autocomplete: "current-password"
-  .row-form-group.small
-    .col-sm
-      = f.submit "Log in"
+-# %hr 
+-# 
+-# .row
+-#   .col-med
+-#     %h5 Admin login
+-# 
+-# = form_for(resource, id: :login, as: resource_name, url: session_path(resource_name)) do |f|
+-#   .row.form-group.small
+-#     = f.label :email, class: "col-form-label col-sm-1"
+-#     .col-sm
+-#       = f.email_field :email, autofocus: true, autocomplete: "email"
+-#   .row.form-group.small
+-#     = f.label :password, class: "col-form-label col-sm-1"
+-#     .col-sm
+-#       = f.password_field :password, autocomplete: "current-password"
+-#   .row-form-group.small
+-#     .col-sm
+-#       = f.submit "Log in"
 
 %hr 
 
@@ -46,4 +46,5 @@
 
 .row
   .col-med
-    %h3= link_to "Research links", "https://jsommers.github.io/", :class => "btn btn-success"
+    -# =link_to "Network measurement research", "https://jsommers.github.io/", :class => "btn btn-success"
+    =link_to "Network measurement research", "https://www.cs.colgate.edu/~jsommers/research.html", :class => "btn btn-success"
