@@ -314,4 +314,6 @@ var ICQ = (function() {
 }());
 ICQ.questionstatus = undefined;
 
+// window.addEventListener('DOMContentLoaded', ICQ.init);
+
 jQuery(ICQ.init);
