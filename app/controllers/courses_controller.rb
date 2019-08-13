@@ -2,7 +2,11 @@ class CoursesController < ApplicationController
   before_action :go_to_current_course, :only => [:index]
 
   def index
-    @courses = Course.all
+    if current_user.admin?
+      @courses = Course.all
+    else
+      @courses = current_user.courses
+    end
   end
 
   def show

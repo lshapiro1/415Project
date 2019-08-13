@@ -5,9 +5,12 @@ RSpec.feature "CourseIndices", type: :feature do
 
   describe "course index page" do
     it "should list courses that exist" do
-      sign_in FactoryBot.create(:student)
-      Course.create!(:name => "One", :daytime => "TR 8:30-9:55")
-      Course.create!(:name => "Two", :daytime => "MWF 10:20-11:10")
+      s = FactoryBot.create(:student)
+      sign_in s
+      c1 = Course.create!(:name => "One", :daytime => "TR 8:30-9:55")
+      c2 = Course.create!(:name => "Two", :daytime => "MWF 10:20-11:10")
+      c1.students << s
+      c2.students << s
 
       visit courses_path
       expect(page.text).to match(/student\d+@colgate.edu/)
