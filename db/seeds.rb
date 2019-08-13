@@ -13,6 +13,7 @@ u = User.create!(:email => 'sommersmeister@gmail.com')
 c = Course.create!(:name => 'COSC101F19', :daytime => 'TR 8:30-9:45')
 c.students << u
 
+c2 = Course.create!(:name => 'COSC301F19', :daytime => 'TR 9:55-11:10')
 
 Question.new # force loading model code
 questions = []
@@ -44,4 +45,3 @@ slist = []
   r.save!
 end
 
-c2 = Course.create!(:name => 'COSC301F19', :daytime => 'TR 9:55-11:10')
