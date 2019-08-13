@@ -25,8 +25,10 @@
       -if user_signed_in?
         #auth
           .row.p-3.bg-primary.text-white
-            .col-9
-              %span.smile= octicon "smiley", :height => 32
+            .col-1
+              =link_to octicon("unverified", :height => 28), courses_path, :class => "icon"
+            .col-8
+              -# %span.smile= octicon "smiley", :height => 28
               %span.smile.font-weight-bolder Hello,
               %span.smile= "#{current_user.email}."
             .col-3= link_to "Sign out", destroy_user_session_path, :method => :delete, :class => "btn btn-light"
