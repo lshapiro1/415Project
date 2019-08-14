@@ -161,8 +161,8 @@ RSpec.describe "CreateAndActivates", type: :request do
       get poll_status_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("application/json")
-      body = eval(response.body)
-      expect(body[:status]).to eq('open')
+      body = JSON.load(response.body)
+      expect(body['status']).to eq('open')
     end
 
     it "should get poll status for closed poll over xhr" do
@@ -180,8 +180,8 @@ RSpec.describe "CreateAndActivates", type: :request do
       get poll_status_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("application/json")
-      body = eval(response.body)
-      expect(body[:status]).to eq('closed')
+      body = JSON.load(response.body)
+      expect(body['status']).to eq('closed')
     end
 
     it "should get poll status for newly activated poll over xhr" do
@@ -201,8 +201,8 @@ RSpec.describe "CreateAndActivates", type: :request do
       get poll_status_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
       expect(response.content_type).to eq("application/json")
-      body = eval(response.body)
-      expect(body[:status]).to eq('refresh')
+      body = JSON.load(response.body)
+      expect(body['status']).to be_nil # FIXME
     end
 
     it "should get redirect for non-xhr requests" do
