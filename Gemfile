@@ -24,6 +24,7 @@ gem 'octicons_helper'
 
 gem 'devise'
 gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection', '~> 0.1'
 
 gem 'ruby-gmail'
 
