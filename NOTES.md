@@ -22,6 +22,9 @@ In production uses postgres; assumes a database named icq.
    2. Populating the question with any details, e.g., multiple choice options
    3. Making the question active (which should update student page)
 
+   Route is: `https://host/x?c=COURSE&q=QUESTION&n=NUMOPTS`
+   Only multichoice questions are supported at this point.
+
 ## Next
 
  * Admin dashboard: need to add answer and show dashboard of what's correct
