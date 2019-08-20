@@ -1,5 +1,3 @@
-# require 'gmail'
-
 class PollsController < ApplicationController
   before_action :redirect_if_student
 
@@ -25,6 +23,8 @@ class PollsController < ApplicationController
       logger.debug("notify")
       render :json => { :done => true }
       return
+    else 
+      redirect_to courses_path and return
     end
   end
 

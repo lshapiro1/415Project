@@ -215,5 +215,56 @@ RSpec.describe "CreateAndActivates", type: :request do
       get poll_status_path(c, q, p)
       expect(response).to have_http_status(:redirect)
     end
+
+    it "should get course status for open poll over xhr" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course)
+      q = c.questions.create(:qname => "question", :type => "NumericQuestion")
+      p = q.new_poll(:round => 1, :isopen => true)
+      p.save!
+      headers = {
+        "ACCEPT" => "application/json",
+        "HTTP_ACCEPT" => "application/json",
+        'X-Requested-With' => 'XMLHttpRequest',
+      }
+      get course_status_path(c), :headers => headers
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("application/json")
+      body = JSON.load(response.body)
+      expect(body['status']).to eq('open')
+    end
+
+
+    it "should get poll status for closed poll over xhr" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course)
+      q = c.questions.create(:qname => "question", :type => "NumericQuestion")
+      p = q.new_poll(:round => 1, :isopen => false)
+      p.save!
+      headers = {
+        "ACCEPT" => "application/json",
+        "HTTP_ACCEPT" => "application/json",
+        'X-Requested-With' => 'XMLHttpRequest',
+      }
+      get course_status_path(c), :headers => headers
+      expect(response).to have_http_status(:success)
+      expect(response.content_type).to eq("application/json")
+      body = JSON.load(response.body)
+      expect(body['status']).to eq('closed')
+    end
+
+
+    it "should get redirect for non-xhr requests" do
+      s = FactoryBot.create(:admin)
+      sign_in s
+      c = FactoryBot.create(:course)
+      q = c.questions.create(:qname => "question", :type => "NumericQuestion")
+      p = q.new_poll(:round => 1, :isopen => false)
+      p.save!
+      get course_status_path(c)
+      expect(response).to have_http_status(:redirect)
+    end
   end
 end

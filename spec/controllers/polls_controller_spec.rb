@@ -96,4 +96,15 @@ RSpec.describe PollsController, type: :controller do
       expect { Poll.find(p.id) }.to raise_error { ActiveRecord::RecordNotFound }
     end
   end
+
+  describe "GET #notify" do
+    it "should send a notification email for poll responses" do
+      sign_in FactoryBot.create(:admin)
+      c = FactoryBot.create(:course) 
+      q = c.questions.create(:qname => "question", :type => "NumericQuestion")
+      p = q.new_poll(:isopen => false, :round => 1)
+      p.save
+      expect(response).to be_ok
+    end
+  end
 end

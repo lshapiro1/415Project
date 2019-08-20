@@ -23,6 +23,23 @@ RSpec.feature "PollActivates", type: :feature do
       expect(PollResponse.find(1).response).to eq(1.0)
     end
 
+    it "an active numeric poll should be notifiable" do
+      c = FactoryBot.create(:course)
+      q = FactoryBot.build(:numeric_question, :qname => "Q1", :course => c)
+      c.questions << q
+      q.save
+      p = q.new_poll(:isopen => true, :round => 1)
+      p.save
+
+      admin = FactoryBot.create(:admin)
+      sign_in admin
+      visit course_question_poll_path(c, q, p)
+      expect(page.text).to match(/Q1/)
+      #assert_emails 1 do
+        click_on "Notify"
+      #end
+    end
+
     it "an active free response should be visible" do
       c = FactoryBot.create(:course)
       q = FactoryBot.build(:free_response_question, :qname => "Q1", :course => c)
