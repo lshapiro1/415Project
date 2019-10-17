@@ -33,7 +33,6 @@ In production uses postgres; assumes a database named icq.
  * Need to add cable/websockets to improve performance on status update
 
  * Lots of ugliness cleanup
-
  
 ## Cable
 
