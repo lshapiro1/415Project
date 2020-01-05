@@ -7,13 +7,32 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # :password => "xyz"
-#
-User.create!(:email => 'jsommers@colgate.edu', :admin => true)
-u = User.create!(:email => 'sommersmeister@gmail.com')
-c = Course.create!(:name => 'COSC101F19', :daytime => 'TR 8:30-9:45')
-c.students << u
 
-c2 = Course.create!(:name => 'COSC301F19', :daytime => 'TR 9:55-11:10')
+User.create!(:email => 'jsommers@colgate.edu', :admin => true)
+c101 = Course.create!(:name => 'COSC101S20', :daytime => 'TR 8:30-9:45')
+c301 = Course.create!(:name => 'COSC301S20', :daytime => 'TR 9:55-11:10')
+
+std101 = %w{
+}
+
+puts "#{c101}"
+std101.each do |email|
+  std = User.create!(:email => email)
+  c101.students << std
+end
+
+exit
+
+puts "#{c301}"
+std301 = %w{
+}
+
+std301.each do |email|
+  std = User.create!(:email => email)
+  c301.students << std
+end
+
+exit
 
 # dummy question seeds
 

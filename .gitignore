@@ -36,3 +36,5 @@ KEYS.md
 
 /vendor/bundle
 yarn.lock
+
+*.dump.gz
