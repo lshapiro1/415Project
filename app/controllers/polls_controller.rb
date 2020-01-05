@@ -20,7 +20,6 @@ class PollsController < ApplicationController
     poll = Poll.find(params[:id])
     PollNotifyMailer.with(user: current_user, poll: poll).notify_email.deliver_now
     if request.xhr?
-      logger.debug("notify")
       render :json => { :done => true }
       return
     else 
