@@ -66,3 +66,9 @@ In production uses postgres; assumes a database named icq.
   ```
   App.pollChannel.send({ sent_by: "Paul", body: "This is a cool chat app." });
   ```
+
+## Between semesters
+
+ * To dump the db: `pg_dump -d icq -f dumpfile`
+ * If there's a need to restore, recreate the db (with rails), then: `psql DB_NAME < OUTPUT_FILE_PATH`
+
