@@ -13,6 +13,7 @@ c101 = Course.create!(:name => 'COSC101S20', :daytime => 'TR 8:30-9:45')
 c301 = Course.create!(:name => 'COSC301S20', :daytime => 'TR 9:55-11:10')
 
 std101 = %w{
+sommersmeister@gmail.com
 }
 
 puts "#{c101}"
