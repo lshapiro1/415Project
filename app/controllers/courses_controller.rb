@@ -59,7 +59,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
     redirect_to course_path(@course) if current_user.student? 
 
-    pollids = @course.questions.where('questions.type != "AttendanceQuestion"').joins(:polls).select("polls.id")
+    pollids = @course.questions.where.not(:type => "AttendanceQuestion").joins(:polls).select("polls.id")
 
     @response_matrix = []  
     pollids.each do |pid|
