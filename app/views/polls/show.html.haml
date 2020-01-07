@@ -8,14 +8,17 @@
   .card
     .card-body
       .card-header
-        %h5.card-title= "Poll round #{@poll.round} for \"#{@question.qname}\" (#{@course.name})"
-        %h6.card-subtitle
-          %span= octicon question_icon(@question.type), :height => 18
-          %span= "#{question_type(@question.type)} question --- "
-          -if @poll.isopen
-            %span.badge.badge-success open
-          -else
-            %span.badge.badge-danger closed
+        -if question_type(@question.type) == "Attendance"
+          %h5.card-title= "Attendance poll for #{Date.today}"
+        -else
+          %h5.card-title= "Poll round #{@poll.round} for \"#{@question.qname}\" (#{@course.name})"
+          %h6.card-subtitle
+            %span= octicon question_icon(@question.type), :height => 18
+            %span= "#{question_type(@question.type)} question --- "
+            -if @poll.isopen
+              %span.badge.badge-success open
+            -else
+              %span.badge.badge-danger closed
 
       %hr
 

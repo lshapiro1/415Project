@@ -32,3 +32,24 @@
 .hidden {
   display: none;
 }
+
+.vertical_orientation {
+  font-size: 7pt;
+  font-weight: normal;
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+  -webkit-writing-mode: vertical-lr;
+  -webkit-text-orientation: mixed;
+}
+
+.small {
+  font-size: 8pt;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}

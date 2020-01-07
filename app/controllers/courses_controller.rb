@@ -36,6 +36,49 @@ class CoursesController < ApplicationController
     end
   end
 
+  def attendance_report
+    @course = Course.find(params[:id])
+    redirect_to course_path(@course) if current_user.student? 
+    @apolls = Question.where(:type => "AttendanceQuestion", :course => @course).first.polls.order(:created_at)
+
+    # Course.find(1).questions.where(:type => "AttendanceQuestion").joins(:polls).select("polls.id")
+
+    @attendance_matrix = []  
+    @apolls.each do |poll|
+      thisrow = [ poll.created_at.strftime("%Y-%m-%d") ]
+      @course.students.each do |s|
+        thisrow << poll.poll_responses.where(:user_id => s.id).count
+      end
+      sum = thisrow[1..].sum
+      thisrow << "#{sum} / #{thisrow.length-1}"
+      @attendance_matrix << thisrow
+    end
+  end
+
+  def question_report
+    @course = Course.find(params[:id])
+    redirect_to course_path(@course) if current_user.student? 
+
+    pollids = @course.questions.where('questions.type != "AttendanceQuestion"').joins(:polls).select("polls.id")
+
+    @response_matrix = []  
+    pollids.each do |pid|
+      q = Poll.find(pid.id).question
+      responseset = PollResponse.where(:poll_id => pid.id).joins(:user)
+      thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
+
+      @course.students.each do |s|
+        resp = responseset.where(:user_id => s.id).first 
+        if resp
+          thisrow << (q.answer ? (q.answer == resp.response ? "1" : "0") : "!")
+        else
+          thisrow << "-"
+        end
+      end
+      @response_matrix << thisrow
+    end
+  end
+
   def status
     @course = Course.find(params[:id])
     logger.debug ("inside status")

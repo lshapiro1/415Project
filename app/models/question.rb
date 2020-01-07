@@ -15,7 +15,6 @@ class Question < ApplicationRecord
     read_attribute(:content_type) || write_attribute(:content_type, "plain")
   end
 
-
 protected
   def options_for_multichoice
     if type == "MultiChoiceQuestion" and qcontent.length < 2
@@ -58,5 +57,20 @@ class NumericQuestion < Question
 
   def prompt
     "Enter a number"
+  end
+end
+
+class AttendanceQuestion < Question
+  def new_poll(h={})
+    Poll.new(:type => "AttendancePoll", :question => self, **h)
+  end
+
+  def prompt
+    "Check in now"
+  end
+
+  def attendance_taken?
+    now = Time.now
+    self.polls.where('created_at BETWEEN ? AND ?', Time.new(now.year, now.month, now.day), Time.new(now.year, now.month, now.day, 23, 59, 59)).first
   end
 end

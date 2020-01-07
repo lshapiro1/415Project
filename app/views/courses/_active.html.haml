@@ -9,10 +9,10 @@
       =form_for @response, :method => :post, :url => course_question_poll_poll_responses_path(@course, @question, @poll), :remote => true do
         .form-group
           =question_input(@question, @current) 
-          =submit_tag "Submit answer" 
+          =submit_tag @question.prompt
 #noqcard.card.hidden
   .card-body
     %h3.card-title{"data-ids" => "#{@course.id} #{@qid} #{@pid}"}
     %span= octicon "watch", :height => 32
     %span Hang on ... 
-    %p.card-text no question is active right no
+    %p.card-text no question is active right now

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     end
   end
   get '/courses/:course_id/questions/:question_id/polls/:id/status', :to => 'polls#status', :as => :poll_status, :action => 'status', :controller => 'polls'
+  get '/courses/:id/attendance_report', :to => 'courses#attendance_report', :as => :attendance_report, :action => "attendance_report", :controller => 'courses'
+  get '/courses/:id/question_report', :to => 'courses#question_report', :as => :question_report, :action => "question_report", :controller => 'courses'
   get '/courses/:id/status', :to => 'courses#status', :as => :course_status, :action => 'status', :controller => 'courses'
   get '/polls/:id/notify', :to => 'polls#notify', :as => :poll_notify, :action => 'notify', :controller => 'polls'
 

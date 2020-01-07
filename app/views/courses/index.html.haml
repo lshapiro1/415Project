@@ -7,11 +7,15 @@
       %th Name
       %th Meeting times
       -if !current_user.student?
+        %th Attendance report
+        %th Question/poll report
         %th # Students
     -@courses.each do |c|
       %tr
         %td= link_to c.name, course_path(c), :class => "btn btn-light"
         %td= c.daytime
         -if !current_user.student?
+          %td= link_to "Show report", attendance_report_path(c), :class => "btn btn-primary btn-sm"
+          %td= link_to "Show report", question_report_path(c), :class => "btn btn-primary btn-sm"
           %td= c.students.count
 
