@@ -218,7 +218,14 @@ var ICQ = (function() {
     var drawresponse = function(ev) {
       var detail = ev.detail;
       var data = detail[0];
-      console.log(data);
+      // console.log(data);
+      var rcount = 0;
+      var counts = Object.values(data.responses);
+      // console.log(counts);
+      for (var i = 0; i < counts.length; i++) {
+          rcount += counts[i];
+      }
+      jQuery("#responsecount").text(rcount);
       var plotfn = {"MultiChoicePoll": horizontal_bar, "NumericPoll": boxwhiskers, "FreeResponsePoll": freeresponse_show};
       jQuery("#plotspace > svg").remove();
       plotfn[data.type](data.responses, data.answer);
