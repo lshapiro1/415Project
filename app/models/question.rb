@@ -15,6 +15,10 @@ class Question < ApplicationRecord
     read_attribute(:content_type) || write_attribute(:content_type, "plain")
   end
 
+  def poll_responses_for(user) 
+    user.poll_responses 
+  end
+
 protected
   def options_for_multichoice
     if type == "MultiChoiceQuestion" and qcontent.length < 2

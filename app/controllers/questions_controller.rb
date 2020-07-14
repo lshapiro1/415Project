@@ -1,9 +1,12 @@
 class QuestionsController < ApplicationController
-  before_action :redirect_if_student
+  before_action :redirect_if_student, :only => ['new', 'create', 'destroy']
 
   def index
     @course = Course.find(params[:course_id])    
     @questions = @course.questions.order(:type).where.not(:type => "AttendanceQuestion")
+    if !current_user.admin?
+      render 'student_index' and return
+    end
   end
 
   def new

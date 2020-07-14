@@ -51,7 +51,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'capybara'
   gem 'rails-controller-testing'
-  gem 'database_cleaner'
+  gem 'database_cleaner-active_record'
 end
 
 group :development do

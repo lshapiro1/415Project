@@ -4,6 +4,16 @@ module QuestionsHelper
     return attendq.nil? ? false : attendq.attendance_taken?
   end
 
+  def student_responses(q)
+    rr = PollResponse.joins(:poll).where("polls.question_id" => q.id).where("poll_responses.user_id" => current_user).select(:response)
+    if rr.length == 0
+      "No responses"
+    else
+      out = rr.collect {|rec| rec.response}.join(',')
+      "#{rr.length} response: #{out}"
+    end
+  end
+
   def question_type(t)
     t =~ /^(\w+)Question$/ 
     $1.capitalize
