@@ -71,6 +71,6 @@ class AttendanceQuestion < Question
 
   def attendance_taken?
     now = Time.now
-    self.polls.where('created_at BETWEEN ? AND ?', Time.new(now.year, now.month, now.day), Time.new(now.year, now.month, now.day, 23, 59, 59)).first
+    !self.polls.where('created_at BETWEEN ? AND ?', Time.new(now.year, now.month, now.day), Time.new(now.year, now.month, now.day, 23, 59, 59)).first.nil?
   end
 end

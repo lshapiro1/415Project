@@ -125,7 +125,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       post course_question_poll_poll_responses_path(c, q, p), :params => {:course_id => c.id, :question_id => q.id, :poll_id => p.id, :response => "1.0"}, :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       expect(PollResponse.where(:user => s, :poll => p).first.response).to eq(1.0)
     end
 
@@ -143,7 +143,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       get course_question_poll_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
     end
 
     it "should get poll status for open poll over xhr" do
@@ -160,7 +160,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       get poll_status_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       body = JSON.load(response.body)
       expect(body['status']).to eq('open')
     end
@@ -179,7 +179,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       get poll_status_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       body = JSON.load(response.body)
       expect(body['status']).to eq('closed')
     end
@@ -200,7 +200,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       get poll_status_path(c, q, p), :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       body = JSON.load(response.body)
       expect(body['status']).to be_nil # FIXME
     end
@@ -230,7 +230,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       get course_status_path(c), :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       body = JSON.load(response.body)
       expect(body['status']).to eq('open')
     end
@@ -250,7 +250,7 @@ RSpec.describe "CreateAndActivates", type: :request do
       }
       get course_status_path(c), :headers => headers
       expect(response).to have_http_status(:success)
-      expect(response.content_type).to eq("application/json")
+      expect(response.media_type).to eq("application/json")
       body = JSON.load(response.body)
       expect(body['status']).to eq('closed')
     end

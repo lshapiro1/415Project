@@ -1,4 +1,9 @@
 module QuestionsHelper
+  def attendance_taken?(course)
+    attendq = course.questions.where(:type => "AttendanceQuestion").first
+    return attendq.nil? ? false : attendq.attendance_taken?
+  end
+
   def question_type(t)
     t =~ /^(\w+)Question$/ 
     $1.capitalize

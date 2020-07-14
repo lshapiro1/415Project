@@ -11,8 +11,8 @@
       %p
       %span= octicon "calendar", :height => 20
       %span
-        -if !@attendanceq.attendance_taken?
-          =link_to "Take attendance", course_question_polls_path(@course, @attendanceq), :method => :post, :id => "create_#{@attendanceq.qname}", :class => "btn btn-sm btn-success"
+        -if !attendance_taken?(@course)
+          =link_to 'Take attendance', course_attendance_path(@course), :method => :post, :id => 'take_attendance', :class => 'btn btn-sm btn-success'
         -else
           Attendance already taken today
 
