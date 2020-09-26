@@ -2,7 +2,7 @@
 
 ## In-class question (icq) app for peer instruction 
 
-Uses Rails 5.2.4 with Devise/Google oauth2.  
+Uses Rails 6.0 with Devise/Google oauth2.  
 
 ## Set up
 
