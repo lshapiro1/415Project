@@ -73,4 +73,6 @@ Rails.application.configure do
 #    enable_starttls_auto: true
 #  }
 
+  config.hosts << "cd89a40a1e1e4b33a6b0de5339795bc9.vfs.cloud9.us-east-1.amazonaws.com"
+
 end
