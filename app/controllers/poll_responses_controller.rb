@@ -14,7 +14,6 @@ class PollResponsesController < ApplicationController
       flash[:alert] = "Poll is not open"
       redirect_to course_path(@course) and return
     end
-
     r = @poll.poll_responses.where(:user => current_user).first
     if !r
       r = @poll.new_response(:user => current_user)
@@ -22,6 +21,7 @@ class PollResponsesController < ApplicationController
     r.response = params[:response]
     if r.save
       flash[:notice] = "Response recorded"
+      redirect_to(course_path(@course)) and return
     else
       flash[:notice] = "Saving response failed"
     end
