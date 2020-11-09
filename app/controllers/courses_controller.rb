@@ -19,6 +19,13 @@ class CoursesController < ApplicationController
       @poll = @course.active_poll
       @question = @course.active_question
       if @poll
+        r = @poll.poll_responses.where(:user => current_user).first
+        if @question.type == "AttendanceQuestion"
+          if r
+            flash[:notice] = "You already checked in! Wait until there is another question"
+            redirect_to courses_path and return
+          end
+        end
         @response = @poll.new_response
         @current = PollResponse.where(:poll => @poll, :user => current_user).first
         @pid = @poll.id

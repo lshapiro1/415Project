@@ -72,5 +72,6 @@ Rails.application.configure do
 #    authentication:       'plain',
 #    enable_starttls_auto: true
 #  }
+config.hosts << "6de74a3ac944484b8e5e7464e353b50e.vfs.cloud9.us-east-1.amazonaws.com"
 
 end
