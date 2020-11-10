@@ -21,6 +21,7 @@ std101 = %w{
 dingflag@gmail.com
 }
 
+
 puts "#{c101}"
 std101.each do |email|
   std = User.create!(:email => email)

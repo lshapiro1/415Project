@@ -279,11 +279,29 @@ var ICQ = (function() {
 
     return {
         init: function() {
+            jQuery("#remove_option").hide();
+            jQuery("#add_option").show();
             jQuery("#question_type").on('change', function() {
                 if (jQuery("#question_type").val() == "MultiChoiceQuestion") {
                     jQuery("#question_qcontent").show();
+                    jQuery("#question_qcontent_label").show();
+                    jQuery("#add_option").show();
+                    
+                    var extra_opts = 0;
+                    jQuery("#add_option").on('click', function(){
+                        extra_opts+=1;
+                        jQuery("#remove_option").show(); 
+                    });
+                    
+                    jQuery("#remove_option").on('click', function(){
+                        extra_opts+=1;
+                        jQuery("#remove_option").show(); 
+                    });
+                    
                 } else {
                     jQuery("#question_qcontent").hide();
+                    jQuery("#question_qcontent_label").hide();
+                    jQuery("#add_option").hide();
                 }
             });
             jQuery("#notify").on('ajax:success', function() {
