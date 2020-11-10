@@ -18,7 +18,6 @@ class PollResponsesController < ApplicationController
 
     r = @poll.poll_responses.where(:user => current_user).first
   
-    
     if !r
       r = @poll.new_response(:user => current_user)
     end

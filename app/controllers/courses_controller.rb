@@ -37,7 +37,12 @@ class CoursesController < ApplicationController
         @qname = ""
       end
       @activepoll = !!@poll
-      render 'show_student'
+      if @current != nil
+        @answered = true
+      else
+        @answered = false
+      end
+      render'show_student'
     else
       redirect_to course_questions_path(@course) and return
     end
@@ -50,7 +55,7 @@ class CoursesController < ApplicationController
       @question = AttendanceQuestion.new
       @question.course = @course
       if !@question.save
-        flash[:alert] = "Failed to save question #{question}"
+        flash[:alert] = "Failed to save question #{@question}"
         redirect_to course_questions_path(@course) and return
       end
     end
