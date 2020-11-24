@@ -146,6 +146,7 @@ class CoursesController < ApplicationController
     numopts = params[:n].to_i
     t = params[:t] || 'm' # m, n, f
     t = t.to_sym
+
     @course = Course.where(:name => course).first
     if !@course
       flash[:notice] = "Course #{course} doesn't exist"

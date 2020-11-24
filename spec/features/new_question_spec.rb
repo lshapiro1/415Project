@@ -59,5 +59,40 @@ RSpec.feature "NewQuestions", type: :feature do
       expect(page.current_path).to eq(course_questions_path(@c))
       expect(page.text).to match(/NEWQ/)
     end
+    
+    it "should display the options inputs for multichoice" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "MultiChoiceQuestion", from: "question_type"
+      expect(page).to have_css("button#add_option")
+      expect(page).to have_content("Options:")
+    end
+    
+    it "should not display the options inputs for numeric" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "NumericQuestion", from: "question_type"
+      expect(page).not_to have_css("button#add_option")
+      expect(page).not_to have_content("Options:")
+    end
+    
+    it "should display correct answer input for numeric" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "NumericQuestion", from: "question_type"
+      expect(page).to have_css("input#question_answer")
+      expect(page).to have_content("Correct answer")
+    end
+    
+    it "should not display the options or correct answer inputs for free response" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "FreeResponseQuestion", from: "question_type"
+      expect(page).not_to have_css("button#add_option")
+      expect(page).not_to have_content("Options:")
+      expect(page).not_to have_css("input#question_answer")
+      expect(page).not_to have_content("Correct answer")
+    end
+    
   end
 end
