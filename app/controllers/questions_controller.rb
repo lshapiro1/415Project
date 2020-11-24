@@ -8,6 +8,12 @@ class QuestionsController < ApplicationController
       render 'student_index' and return
     end
   end
+  
+  def show
+    @course = Course.find(params[:course_id])
+    @question = Question.find(params[:id])
+    render 'show_question' and return
+  end
 
   def new
     @course = Course.find(params[:course_id])    
