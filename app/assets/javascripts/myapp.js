@@ -319,7 +319,7 @@ var ICQ = (function() {
             jQuery("#add_option").on('click', function(){
                 opts+=1;
                 console.log(opts);
-                jQuery("#remove_option").show(); 
+                jQuery("#remove_option").show();
                 jQuery("#options").append("<span id=optspan><input type=text name='options[]' id='extraoption' required> <input type=radio name=correctanswer id='optionselect' required><span/>");
                 jQuery("#optspan").attr("id", "optspan" + opts);
                 jQuery("#extraoption").attr("id", "option" + opts);

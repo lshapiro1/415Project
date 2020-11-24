@@ -68,6 +68,46 @@ RSpec.feature "NewQuestions", type: :feature do
       expect(page).to have_content("Options:")
     end
     
+    it "should add another option field when add option is clicked for multichoice" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "MultiChoiceQuestion", from: "question_type"
+      click_on "Add Option"
+      expect(page).to have_css("span#optspan1")
+    end
+    
+    
+    it "should display remove option button after an option has been added" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "MultiChoiceQuestion", from: "question_type"
+      expect(page).not_to have_css("button#remove_option")
+      click_on "Add Option"
+      expect(page).to have_css("button#remove_option")
+    end
+    
+    it "should remove the last option field if remove option is clicked" do 
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "MultiChoiceQuestion", from: "question_type"
+      click_on "Add Option"
+      click_on "Add Option"
+      click_on "Remove Option"
+      expect(page).not_to have_css("span#optspan2")
+    end
+    
+    it "should not show remove option button if there are currently no option input fields" do 
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      select "MultiChoiceQuestion", from: "question_type"
+      click_on "Add Option"
+      click_on "Add Option"
+      click_on "Remove Option"
+      click_on "Remove Option"
+      expect(page).not_to have_css("button#remove_option")
+    end
+    
+    
     it "should not display the options inputs for numeric" do
       visit course_questions_path(@c)
       click_on "Create a new question"
@@ -93,6 +133,8 @@ RSpec.feature "NewQuestions", type: :feature do
       expect(page).not_to have_css("input#question_answer")
       expect(page).not_to have_content("Correct answer")
     end
+    
+    
     
   end
 end
