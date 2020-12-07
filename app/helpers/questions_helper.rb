@@ -4,8 +4,8 @@ module QuestionsHelper
     return attendq.nil? ? false : attendq.attendance_taken?
   end
 
-  def student_responses(q)
-    rr = PollResponse.joins(:poll).where("polls.question_id" => q.id).where("poll_responses.user_id" => current_user).select(:response)
+  def student_responses(q,user = current_user)
+    rr = PollResponse.joins(:poll).where("polls.question_id" => q.id).where("poll_responses.user_id" => user).select(:response)
     if rr.length == 0
       "No responses"
     else
@@ -58,4 +58,35 @@ module QuestionsHelper
       image_tag(img.variant(resize: "100x100^")).html_safe
     end
   end
+  
+  def questionsByDate(course, user = current_user)
+    questionHash = course.getQuestionsByDate
+    sortedKeys = questionHash.keys.sort_by{|date| m,d,y = date.split('-'); [y,m,d] }
+    return getDateInfo(sortedKeys,questionHash, user)
+  end
+  
+  def getDateInfo(dates,questionsHash, user = current_user)
+    toReturn = Array.new
+    dates.each do |d|
+      correct = 0
+      incorrect = 0
+      questionsHash[d].each do |q|
+        if !q.active_poll
+          rr = PollResponse.joins(:poll).where("polls.question_id" => q.id).where("poll_responses.user_id" => user).select(:response)
+          if rr.length != 0
+            rr.each do |ans|
+              if (ans == q.answer)
+                correct+= 1
+              else
+                incorrect += 1
+              end
+            end
+          end
+        end
+      end
+      toReturn << [d,questionsHash[d].length, correct, incorrect,questionsHash[d]]
+    end
+    return toReturn
+  end
+  
 end
