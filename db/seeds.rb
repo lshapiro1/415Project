@@ -22,7 +22,7 @@ attendance301 = AttendanceQuestion.create!(:qname => "Attendance check in", :cou
 
 #sommersmeister@gmail.com
 std101 = %w{
-mtmilke@gmail.com
+dingflag@gmail.com
 
 }
 

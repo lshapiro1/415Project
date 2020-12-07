@@ -14,15 +14,15 @@
         %br
         =f.label :type, "Question type:"
         =f.select :type, question_types, :class => 'custom-select'
-        %br
+        
         =f.label :qcontent, "Options:", :id => 'question_qcontent_label'
-        =f.text_area :qcontent, :placeholder => "Enter each on new line:\nA\nB\nC..."
-        %br
-        // %button{:id => "add_option", :type => "button"} Add Option 
-        // %button{:id => "remove_option", :type => "button"} Remove Option
-        // %br
-        =f.label :answer, 'Answer:'
-        =f.text_field :answer, :placeholder => "Enter correct option"
+        // =f.text_area :qcontent, :id => 'qtext_area'
+        %button{:id => "add_option", :type => "button"} Add Option 
+        %button{:id => "remove_option", :type => "button"} Remove Option
+        #options
+        
+        =f.label :answer, 'Correct answer:', :id => 'question_answer_label'
+        =f.text_field :answer, :placeholder => "Enter correct number", :id => 'question_answer'
         %br
         =f.label :breakout, 'Breakout Group Size:'
         =f.text_field :breakout, :placeholder => "Enter number of students"
