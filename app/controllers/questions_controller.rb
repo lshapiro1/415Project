@@ -8,6 +8,12 @@ class QuestionsController < ApplicationController
       render 'student_index' and return
     end
   end
+  
+  def show
+    @course = Course.find(params[:course_id])
+    @question = Question.find(params[:id])
+    render 'show_question' and return
+  end
 
   def new
     @course = Course.find(params[:course_id])    
@@ -40,7 +46,7 @@ class QuestionsController < ApplicationController
 
 private
   def create_params
-    p = params.require(:question).permit(:qname, :type, :qcontent, :content_type, :answer, :image, :options)
+    p = params.require(:question).permit(:qname, :type, :qcontent, :content_type, :answer, :breakout, :image, :options)
     # reform qcontent into an array
     if p[:qcontent]
       p[:qcontent] = p[:qcontent].split.collect { |s| s.strip }
