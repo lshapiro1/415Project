@@ -1,20 +1,32 @@
--# %p= @response_matrix
+%link{:type => "text/css", :rel => "stylesheet", :href => "/stylesheets/question_report.css"}
 
-%h3= "Question report for #{@course.name}"
-%table.table-striped.table-bordered
-  %tr
-    %td.small Date
-    %td.small qId
-    %td.small pId
-    %td.small qType
-    -@course.students.each do |s|
-      %th
-        %p.vertical_orientation= s.email
+%h3{:id => "q_report_header"}= "Question report for #{@course.name}"
+#accordion
   -@response_matrix.each do |row|
-    %tr
-      %td.small= "#{row[0]}"
-      %td.small= "#{row[1]}"
-      %td.small= "#{row[2]}"
-      %td.small= "#{row[3]}"
-      -row[4..].each do |val|
-        %td.small= "#{val}"
+    .card.bg-light
+      .card_heading.bg-primary
+        // %h4.mb-0 #{row[1]}
+        %h4.mb-0= link_to "#{row[1]}" , course_question_path(@course,row[0]), class: 'text-dark'
+        
+        
+      .card_body.container-fluid
+        .col-sm
+          %span 
+            %h6.mb-0 Number of Responses: #{row[-2]}
+            %h6.mb-0 #{row[-1]}% Correct
+        .col-sm
+          %h5 Student Responses
+          %table.table-striped
+            %tr 
+              %th Email
+              %th Response
+              %th Correct?
+            -row[2...-2].each do |student|
+              %tr
+                %td= "#{student[0]}"
+                %td= "#{student[1]}"
+                %td= "#{student[2]}"
+    %br      
+
+        
+      

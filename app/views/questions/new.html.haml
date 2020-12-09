@@ -4,7 +4,7 @@
   
   
   %h1{:class => "text-align:center d-flex justify-content-center" } Create New Question
-  .card.bg-primary
+  #question_input.card.bg-primary
     
     #form.d-flex.justify-content-center
       =form_for [@course, @q], method: :post do |f|
@@ -31,7 +31,9 @@
         =f.file_field :image, :accept => 'image/png,image/gif,image/jpeg,image/pdf', :class => 'btn-light', :id => 'file_input'
         %br
         %br
+        =f.hidden_field :answer, id: "answer"
         =f.submit "Create question", :id => 'submit'
+        // =params[:question][:answer] = params[:correctanswer]
 
   #bottom.d-flex.justify-content-center
     =link_to "Back to question index", course_questions_path(@course), :method => :get

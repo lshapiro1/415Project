@@ -21,10 +21,8 @@ c301 = Course.create!(:name => 'COSC301S20', :daytime => 'TR 9:55-11:10')
 attendance301 = AttendanceQuestion.create!(:qname => "Attendance check in", :course => c301)
 
 #sommersmeister@gmail.com
-std101 = %w{
-dingflag@gmail.com
+std101 = ['dingflag@gmail.com', 'wrequaw@gmail.com']
 
-}
 
 
 puts "#{c101}"
