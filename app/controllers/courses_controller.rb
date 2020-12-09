@@ -99,12 +99,31 @@ class CoursesController < ApplicationController
 
     pollids = @course.questions.where.not(:type => "AttendanceQuestion").joins(:polls).select("polls.id")
 
-    @response_matrix = []  
+    @response_matrix = []
+    @break_groups = []
     pollids.each do |pid|
       q = Poll.find(pid.id).question
+      bg = Array.new(q.breakout){Array.new(0)}
       responseset = PollResponse.where(:poll_id => pid.id).joins(:user)
       thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
-
+      curr = 0
+      @course.students.each do |s|
+        resp = responseset.where(:user_id => s.id).first 
+        if resp
+          bg[curr] << s.email
+          curr += 1 
+          curr = curr % q.breakout
+        end
+      end
+      @course.students.each do |s|
+        resp = responseset.where(:user_id => s.id).first 
+        if !resp
+          bg[curr] << s.email
+          curr += 1 
+          curr = curr % q.breakout
+        end
+      end
+      
       @course.students.each do |s|
         resp = responseset.where(:user_id => s.id).first 
         if resp
@@ -114,7 +133,11 @@ class CoursesController < ApplicationController
         end
       end
       @response_matrix << thisrow
+      @break_groups << bg
     end
+    
+    
+    
   end
 
   def status

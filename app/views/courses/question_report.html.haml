@@ -1,5 +1,8 @@
 -# %p= @response_matrix
 
+%ol.breadcrumb
+  %li.breadcrumb-item= link_to "Courses", courses_path
+
 %h3= "Question report for #{@course.name}"
 %table.table-striped.table-bordered
   %tr
@@ -18,3 +21,15 @@
       %td.small= "#{row[3]}"
       -row[4..].each do |val|
         %td.small= "#{val}"
+        
+-count = 1
+-@break_groups.each do |g|
+  %h5= "Breakout groups for question #{count}"
+  -count = count + 1
+  %table.table-striped.table-bordered
+    %tr
+      %td Groups
+    -g.each do |i|
+      %tr
+        %td.small= i
+        
