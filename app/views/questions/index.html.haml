@@ -37,6 +37,7 @@
           %td= link_to "Activate", course_question_polls_path(@course, q), :method => :post, :id => "create_#{q.qname}", :class => "btn btn-success"
         -else
           %td= "Poll Active"
+      
   #bottom
     %p= link_to "Create a new question", new_course_question_path(@course), :class => "btn btn-primary"
 
