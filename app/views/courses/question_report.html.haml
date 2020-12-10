@@ -1,6 +1,9 @@
 %link{:type => "text/css", :rel => "stylesheet", :href => "/stylesheets/question_report.css"}
 
 %h3{:id => "q_report_header"}= "Question report for #{@course.name}"
+-if @no_responses
+  #no_resp_alert.alert.alert-warning No Responses!
+  
 #accordion
   -@response_matrix.each do |row|
     .card.bg-light
@@ -14,6 +17,8 @@
           %span 
             %h6.mb-0 Number of Responses: #{row[-2]}
             %h6.mb-0 #{row[-1]}% Correct
+            %br
+            
         .col-sm
           %h5 Student Responses
           %table.table-striped

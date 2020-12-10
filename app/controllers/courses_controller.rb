@@ -101,10 +101,14 @@ class CoursesController < ApplicationController
 
     pollids = @course.questions.where.not(:type => "AttendanceQuestion").joins(:polls).select("polls.id")
 
-    @response_matrix = []  
+    @response_matrix = [] 
+    @no_responses = true
     pollids.each do |pid|
       q = Poll.find(pid.id).question
       responseset = PollResponse.where(:poll_id => pid.id).joins(:user)
+      if responseset.present?
+        @no_responses = false
+      end
       # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
       thisrow = [q.id, q.qname]
       count = 0
