@@ -101,11 +101,44 @@ class CoursesController < ApplicationController
 
     pollids = @course.questions.where.not(:type => "AttendanceQuestion").joins(:polls).select("polls.id")
 
+
     @response_matrix = [] 
     @no_responses = true
+    @break_groups = []
+
     pollids.each do |pid|
       q = Poll.find(pid.id).question
+      bg = Array.new(q.breakout){Array.new(0)}
       responseset = PollResponse.where(:poll_id => pid.id).joins(:user)
+# <<<<<<< CreateProfessorDashboard
+#       if responseset.present?
+#         @no_responses = false
+#       end
+#       # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
+#       thisrow = [q.id, q.qname]
+#       count = 0
+#       total_correct = 0
+# =======
+      # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
+      curr = 0
+      @course.students.each do |s|
+        resp = responseset.where(:user_id => s.id).first 
+        if resp
+          bg[curr] << s.email
+          curr += 1 
+          curr = curr % q.breakout
+        end
+      end
+      @course.students.each do |s|
+        resp = responseset.where(:user_id => s.id).first 
+        if !resp
+          bg[curr] << s.email
+          curr += 1 
+          curr = curr % q.breakout
+        end
+      end
+      
+# >>>>>>> master
       if responseset.present?
         @no_responses = false
       end
@@ -113,6 +146,7 @@ class CoursesController < ApplicationController
       thisrow = [q.id, q.qname]
       count = 0
       total_correct = 0
+      
       @course.students.each do |s|
         resp = responseset.where(:user_id => s.id).first 
         student_arr = []
@@ -148,7 +182,11 @@ class CoursesController < ApplicationController
       thisrow << count
       thisrow << (total_correct / count) * 100.0
       @response_matrix << thisrow
+      @break_groups << bg
     end
+    
+    
+    
   end
 
   def status

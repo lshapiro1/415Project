@@ -24,8 +24,8 @@
         =f.label :answer, 'Correct answer:', :id => 'question_answer_label'
         =f.text_field :answer, :placeholder => "Enter correct number", :id => 'question_answer'
         %br
-        =f.label :breakout, 'Breakout Group Size:'
-        =f.text_field :breakout, :placeholder => "Enter number of students"
+        =f.label :breakout, 'Number of Breakout Groups:'
+        =f.number_field :breakout, :value => 1, in: 1..50
         %br
         =f.label :image, "Image:"
         =f.file_field :image, :accept => 'image/png,image/gif,image/jpeg,image/pdf', :class => 'btn-light', :id => 'file_input'

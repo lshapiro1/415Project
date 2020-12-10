@@ -1,5 +1,9 @@
 %link{:type => "text/css", :rel => "stylesheet", :href => "/stylesheets/question_report.css"}
 
+
+%ol.breadcrumb
+  %li.breadcrumb-item= link_to "Courses", courses_path
+  
 %h3{:id => "q_report_header"}= "Question report for #{@course.name}"
 -if @no_responses
   #no_resp_alert.alert.alert-warning No Responses!
@@ -31,7 +35,17 @@
                 %td= "#{student[0]}"
                 %td= "#{student[1]}"
                 %td= "#{student[2]}"
-    %br      
-
+    %br   
         
-      
+-count = 1
+-@break_groups.each do |g|
+  %h5= "Breakout groups for question #{count}"
+  -count = count + 1
+  %table.table-striped.table-bordered
+    %tr
+      %td Groups
+    -g.each do |i|
+      %tr
+        %td.small= i
+        
+
