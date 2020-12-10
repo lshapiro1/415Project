@@ -92,20 +92,34 @@ class CoursesController < ApplicationController
       @attendance_matrix << thisrow
     end
   end
-
+  
+  
+  
   def question_report
     @course = Course.find(params[:id])
     redirect_to course_path(@course) if current_user.student? 
 
     pollids = @course.questions.where.not(:type => "AttendanceQuestion").joins(:polls).select("polls.id")
 
-    @response_matrix = []
+
+    @response_matrix = [] 
+    @no_responses = true
     @break_groups = []
+
     pollids.each do |pid|
       q = Poll.find(pid.id).question
       bg = Array.new(q.breakout){Array.new(0)}
       responseset = PollResponse.where(:poll_id => pid.id).joins(:user)
-      thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
+# <<<<<<< CreateProfessorDashboard
+#       if responseset.present?
+#         @no_responses = false
+#       end
+#       # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
+#       thisrow = [q.id, q.qname]
+#       count = 0
+#       total_correct = 0
+# =======
+      # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
       curr = 0
       @course.students.each do |s|
         resp = responseset.where(:user_id => s.id).first 
@@ -124,14 +138,49 @@ class CoursesController < ApplicationController
         end
       end
       
+# >>>>>>> master
+      if responseset.present?
+        @no_responses = false
+      end
+      # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
+      thisrow = [q.id, q.qname]
+      count = 0
+      total_correct = 0
+      
       @course.students.each do |s|
         resp = responseset.where(:user_id => s.id).first 
+        student_arr = []
         if resp
-          thisrow << (q.answer ? (q.answer == resp.response ? "1" : "0") : "!")
+          count += 1
+          if (q.answer)
+            
+            if(q.type == "NumericQuestion")
+              student_resp = resp.response.round.to_s
+            else
+              student_resp = resp.response
+            end
+          
+            if (q.answer == student_resp)
+              # thisrow << "1"
+              total_correct += 1.0
+              student_arr = [s.email, student_resp,"✓"]
+            else
+              # thisrow << "0"
+              student_arr = [s.email, student_resp, "X"]
+              
+            end
+            
+          else
+            # thisrow << "!"
+            student_arr = [s.email, student_resp, "NA"]
+          end
         else
-          thisrow << "-"
+          student_arr = [s.email,"no response", "NA"]
         end
+        thisrow << student_arr
       end
+      thisrow << count
+      thisrow << (total_correct / count) * 100.0
       @response_matrix << thisrow
       @break_groups << bg
     end

@@ -327,6 +327,27 @@ var ICQ = (function() {
                 jQuery("#optionselect").attr("id", "optionselect" + opts);
             });
             
+            jQuery("#submit").on('mouseover', function(){
+                
+                if (jQuery("#question_type").val() == "MultiChoiceQuestion") {
+                    jQuery('#options > span').each(function(){
+                        //set radio button in span to .val() of text input in span
+                        var textVal = $(this).children('input[type=text]').val();
+                        
+                        if ($(this).children('input[type=radio]').is(':checked')){
+                        
+                            jQuery("#answer").attr("value", textVal);
+                        }
+                        $(this).children('input[type=radio]').attr("value", textVal);
+            
+                    });
+                }
+                else if(jQuery("#question_type").val() == "NumericQuestion"){
+                    var ansVal = $("#question_answer").val();
+                    jQuery("#answer").attr("value", ansVal);
+                }
+            });
+            
             jQuery("#remove_option").on('click', function(){
                 var optionToremove = "optspan" + opts;
                 jQuery("#"+optionToremove).remove();
