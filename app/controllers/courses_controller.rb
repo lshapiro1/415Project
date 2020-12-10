@@ -180,7 +180,11 @@ class CoursesController < ApplicationController
         thisrow << student_arr
       end
       thisrow << count
-      thisrow << (total_correct / count) * 100.0
+      if count > 0
+        thisrow << (total_correct / count) * 100.0
+      else
+        thisrow << 0.0
+      end
       @response_matrix << thisrow
       @break_groups << bg
     end
