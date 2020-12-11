@@ -110,6 +110,9 @@ class CoursesController < ApplicationController
       q = Poll.find(pid.id).question
       bg = Array.new(q.breakout){Array.new(0)}
       responseset = PollResponse.where(:poll_id => pid.id).joins(:user)
+      if responseset.present?
+        @no_responses = false
+      end
 # <<<<<<< CreateProfessorDashboard
 #       if responseset.present?
 #         @no_responses = false
@@ -139,9 +142,7 @@ class CoursesController < ApplicationController
       end
       
 # >>>>>>> master
-      if responseset.present?
-        @no_responses = false
-      end
+      
       # thisrow = [ q.created_at.strftime("%Y-%m-%d"), q.id, pid.id, q.type[0] ]
       thisrow = [q.id, q.qname]
       count = 0
@@ -149,8 +150,12 @@ class CoursesController < ApplicationController
       
       @course.students.each do |s|
         resp = responseset.where(:user_id => s.id).first 
+        if resp.present?
+          @no_responses = false
+        end
         student_arr = []
         if resp
+
           count += 1
           if (q.answer)
             
@@ -179,10 +184,16 @@ class CoursesController < ApplicationController
         end
         thisrow << student_arr
       end
+        
       thisrow << count
-      thisrow << (total_correct / count) * 100.0
+      if count == 0
+        thisrow << 0
+      else
+        thisrow << (total_correct / count) * 100.0
+      end
       @response_matrix << thisrow
       @break_groups << bg
+      
     end
     
     
