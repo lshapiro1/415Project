@@ -77,8 +77,8 @@ module QuestionsHelper
           rr = PollResponse.joins(:poll).where("polls.question_id" => q.id).where("poll_responses.user_id" => user).select(:response)
           if rr.length != 0
             rr.each do |ans|
-              if (ans == q.answer)
-                correct+= 1
+              if (ans.response == q.answer)
+                correct += 1
               else
                 incorrect += 1
               end
@@ -86,7 +86,7 @@ module QuestionsHelper
           end
         end
       end
-      toReturn << [d,question_count,correct+incorrect, correct, incorrect,questionsHash[d]]
+      toReturn << [d,question_count,incorrect+correct, correct, incorrect,questionsHash[d]]
     end
     return toReturn
   end
