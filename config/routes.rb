@@ -2,12 +2,13 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "courses#index"
   resources :courses, :only => [:index, :show] do
-    resources :questions, :only => [:index, :new, :create, :destroy, :show] do
+    resources :questions, :only => [:index, :new, :create, :destroy, :show, :all] do
       resources :polls, :only => [:index, :show, :create, :update, :destroy] do
         resources :poll_responses, :only => [:create]
       end
     end
   end
+  get 'courses/:course_id/questions/all', :to => 'questions#all', :as => :all, :action => "all", :controller => 'questions' 
   get '/courses/:course_id/questions/:question_id/polls/:id/status', :to => 'polls#status', :as => :poll_status, :action => 'status', :controller => 'polls'
   get '/courses/:id/attendance_report', :to => 'courses#attendance_report', :as => :attendance_report, :action => "attendance_report", :controller => 'courses'
   get '/courses/:id/question_report', :to => 'courses#question_report', :as => :question_report, :action => "question_report", :controller => 'courses'

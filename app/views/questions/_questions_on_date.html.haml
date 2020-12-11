@@ -1,0 +1,18 @@
+#main
+    =link_to "See Questions by Date", course_questions_path(@course)
+    .card-body
+        %table.table
+            %tr
+                %th Name
+                %th Your Response(s)
+                %th Answer
+                %th Type
+                %th Image
+            -getQuestionsById(params[:dateArr]).each do |q|
+                -if !q.active_poll
+                    %tr
+                        %td= link_to "#{q.qname}", course_question_path(@course, q), :method => :get, :page => :singleQuestion
+                        %td= q.answer
+                        %td= student_responses(q)
+                        %td= octicon question_icon(q.type), :height => 32, :"aria-label" => question_type(q.type), :class => 'octicon', :alt => question_type(q.type)
+                        %td= show_image q.image

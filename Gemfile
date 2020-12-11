@@ -15,8 +15,9 @@ gem 'sassc-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
-
+gem 'mini_racer', platforms: :ruby
+gem 'bootstrap', '~> 5.0.0.alpha3'
+gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
 gem 'mini_magick'
@@ -25,7 +26,7 @@ gem 'octicons_helper'
 gem 'devise'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection', '~> 0.1'
-
+gem "autoprefixer-rails"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
