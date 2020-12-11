@@ -8,9 +8,9 @@
 -if @no_responses
   #no_resp_alert.alert.alert-warning No Responses!
   
-#accordion
+-else
   -@response_matrix.each do |row|
-    .card.bg-light
+    .card.bg-light.report_card
       .card_heading.bg-primary
         // %h4.mb-0 #{row[1]}
         %h4.mb-0= link_to "#{row[1]}" , course_question_path(@course,row[0]), class: 'text-dark'
@@ -47,5 +47,3 @@
     -g.each do |i|
       %tr
         %td.small= i
-        
-
