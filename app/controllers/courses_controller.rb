@@ -186,10 +186,10 @@ class CoursesController < ApplicationController
       end
         
       thisrow << count
-      if count == 0
-        thisrow << 0
-      else
+      if count > 0
         thisrow << (total_correct / count) * 100.0
+      else
+        thisrow << 0.0
       end
       @response_matrix << thisrow
       @break_groups << bg
