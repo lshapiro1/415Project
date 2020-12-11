@@ -117,4 +117,6 @@ RSpec.describe CoursesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
   end
+  
+  describe "correct redirect on auth" do
 end

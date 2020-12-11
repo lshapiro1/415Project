@@ -155,7 +155,6 @@ class CoursesController < ApplicationController
         end
         student_arr = []
         if resp
-
           count += 1
           if (q.answer)
             
@@ -164,15 +163,17 @@ class CoursesController < ApplicationController
             else
               student_resp = resp.response
             end
-          
-            if (q.answer == student_resp)
-              # thisrow << "1"
-              total_correct += 1.0
-              student_arr = [s.email, student_resp,"✓"]
-            else
-              # thisrow << "0"
-              student_arr = [s.email, student_resp, "X"]
-              
+            if (q.type != "FreeResponseQuestion")
+              if (q.answer == student_resp)
+                # thisrow << "1"
+                total_correct += 1.0
+                student_arr = [s.email, student_resp,"✓"]
+              else
+                # thisrow << "0"
+                student_arr = [s.email, student_resp, "X"]
+              end
+            else 
+              student_arr = [s.email, student_resp, "NA"]
             end
             
           else
