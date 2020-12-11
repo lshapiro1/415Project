@@ -70,8 +70,10 @@ module QuestionsHelper
     dates.each do |d|
       correct = 0
       incorrect = 0
+      question_count = 0
       questionsHash[d].each do |q|
-        if !q.active_poll
+        if !q.active_poll && q.type != "AttendanceQuestion"
+          question_count += 1
           rr = PollResponse.joins(:poll).where("polls.question_id" => q.id).where("poll_responses.user_id" => user).select(:response)
           if rr.length != 0
             rr.each do |ans|
@@ -84,7 +86,14 @@ module QuestionsHelper
           end
         end
       end
-      toReturn << [d,questionsHash[d].length, correct, incorrect,questionsHash[d]]
+      toReturn << [d,question_count,correct+incorrect, correct, incorrect,questionsHash[d]]
+    end
+    return toReturn
+  end
+  def getQuestionsById(ids)
+    toReturn = Array.new
+    ids.each do |id|
+      toReturn << Question.find(id)
     end
     return toReturn
   end

@@ -5,14 +5,18 @@ class QuestionsController < ApplicationController
     @course = Course.find(params[:course_id])    
     @questions = @course.questions.order(:type).where.not(:type => "AttendanceQuestion")
     if !current_user.admin?
-      render 'student_index' and return
+        render 'student_index'
     end
   end
   
   def show
     @course = Course.find(params[:course_id])
-    @question = Question.find(params[:id])
-    render 'show_question' and return
+    if params[:action] === :by_date
+      render 'questions_by_date', locals: {questionsArr: :id} and return
+    else
+      @question = Question.find(params[:id])
+      render 'show_question' and return
+    end
   end
 
   def new
@@ -40,6 +44,10 @@ class QuestionsController < ApplicationController
     q.destroy
     flash[:notice] = "#{q.qname} destroyed"
     redirect_to course_questions_path(c)
+  end
+  
+  def all
+    render 'all_questions' and return
   end
 
 private

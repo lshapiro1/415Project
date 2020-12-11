@@ -2,7 +2,13 @@
   %ol.breadcrumb
     %li.breadcrumb-item= link_to "Courses", courses_path
     %li.breadcrumb-item.active= @course.name
-
-  =render partial: "student_report"
-
+  .card-body
+    %h5.card-title= @course.name
+    %h6.card-subtitle= @course.daytime
+    -if params[:all]
+      =render :partial => "all_questions"
+    -elsif !!params[:dateArr]
+      =render :partial => "questions_on_date"
+    -else
+      =render :partial => 'by_date'
 
