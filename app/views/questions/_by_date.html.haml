@@ -8,7 +8,6 @@
                 %th Number of Responses
                 %th Correct Responses
                 %th Incorrect Responses
-                %th Topics Covered:
                 %th 
             -questionsByDate(@course).each_with_index do |dateArr, idx|
                 %tr
@@ -17,6 +16,5 @@
                     %td= dateArr[2]
                     %td= dateArr[3]
                     %td= dateArr[4]
-                    %td 7.1
                     %td 
                         =link_to octicon("chevron-right", :height => 20), course_questions_path(@course, :dateArr => dateArr[5]),:action => :get, :method => :get
