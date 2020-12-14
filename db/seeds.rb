@@ -47,40 +47,40 @@ c301.students << u3
 
 Question.new # force loading model code
 questions = []
-fr = FreeResponseQuestion.create!(:qname => "What does this image make you think of?", :course => c301)
+fr = FreeResponseQuestion.create!(:qname => "What does this image make you think of?", :course => c301, :breakout => 2)
 fr.image.attach(io: File.open('testimg.png'), filename: 'testimg.png')
 frp = fr.new_poll(:round => 1)
 frp.save!
-num = NumericQuestion.create!(:qname => "What value does this function return?", :answer => 8, :course => c301, :created_at => "2020-11-15")
+num = NumericQuestion.create!(:qname => "What value does this function return?", :answer => 8, :course => c301, :created_at => "2020-11-15", :breakout => 2)
 nump = num.new_poll(:round => 1)
 nump.save!
 options = ["Syntax error", "Runtime error", "Logic error"]
-mc = MultiChoiceQuestion.create!(:qname => "What kind of error does this code exhibit?", :qcontent => options, :answer => "Logic error", :course => c301,:created_at => "2020-11-15")
+mc = MultiChoiceQuestion.create!(:qname => "What kind of error does this code exhibit?", :qcontent => options, :answer => "Logic error", :course => c301,:created_at => "2020-11-15", :breakout => 2)
 mcp = mc.new_poll(:round => 1)
 mcp.save!
 options = ["A", "B", "C", "D"]
-mc0 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[1], :course => c301,:created_at => "2020-11-15")
+mc0 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[1], :course => c301,:created_at => "2020-11-15", :breakout => 3)
 mcp0 = mc0.new_poll(:round => 1)
 mcp0.save!
-mc1 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-11-17")
+mc1 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-11-17", :breakout => 3)
 mcp1 = mc1.new_poll(:round => 1)
 mcp1.save!
-mc2 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[3], :course => c301,:created_at => "2020-11-19")
+mc2 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[3], :course => c301,:created_at => "2020-11-19", :breakout => 3)
 mcp2 = mc2.new_poll(:round => 1)
 mcp2.save!
-mc3 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-11-20")
+mc3 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-11-20", :breakout => 3)
 mcp3 = mc3.new_poll(:round => 1)
 mcp3.save!
-mc4 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[2], :course => c301,:created_at => "2020-11-20")
+mc4 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[2], :course => c301,:created_at => "2020-11-20", :breakout => 3)
 mcp4 = mc4.new_poll(:round => 1)
 mcp4.save!
-mc5 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-12-1")
+mc5 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-12-1", :breakout => 3)
 mcp5 = mc5.new_poll(:round => 1)
 mcp5.save!
-mc6 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[1], :course => c301,:created_at => "2020-12-1")
+mc6 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[1], :course => c301,:created_at => "2020-12-1", :breakout => 3)
 mcp6 = mc6.new_poll(:round => 1)
 mcp6.save!
-mc7 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[2], :course => c301,:created_at => "2020-12-1")
+mc7 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[2], :course => c301,:created_at => "2020-12-1", :breakout => 3)
 mcp7 = mc7.new_poll(:round => 1)
 mcp7.save!
 
