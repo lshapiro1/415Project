@@ -86,7 +86,7 @@ module QuestionsHelper
           end
         end
       end
-      toReturn << [d,question_count,correct+incorrect, correct, incorrect,questionsHash[d]]
+      toReturn << [d,question_count,incorrect+correct, correct, incorrect,questionsHash[d]]
     end
     return toReturn
   end

@@ -134,7 +134,11 @@ RSpec.feature "NewQuestions", type: :feature do
       expect(page).not_to have_content("Correct answer")
     end
     
-    
+    it "should display breakout groups field" do
+      visit course_questions_path(@c)
+      click_on "Create a new question"
+      expect(page).to have_content("Number of Breakout Groups:")
+    end
     
   end
 end

@@ -22,18 +22,21 @@ attendance101 = AttendanceQuestion.create!(:qname => "Attendance check in", :cou
 c301 = Course.create!(:name => 'COSC301S20', :daytime => 'MWF 9:00-11:15')
 attendance301 = AttendanceQuestion.create!(:qname => "Attendance check in", :course => c301)
 
-#sommersmeister@gmail.com
-std101 = ['dingflag@gmail.com', 'wrequaw@gmail.com', 'shapirolucass@gmail.com']
+std101 = ['dingflag@gmail.com', 'wrequaw@gmail.com', 'shapirolucass@gmail.com','mtmilke@gmail.com']
 
 u0 = User.create!(:email => 'dingflag@gmail.com')
 u1 = User.create!(:email => 'wrequaw@gmail.com')
 u2 = User.create!(:email => 'shapirolucass@gmail.com')
+u3 = User.create!(:email => 'mtmilke@gmail.com')
 c101.students << u0
 c101.students << u1
 c101.students << u2
+c101.students << u3
 c301.students << u0
 c301.students << u1
 c301.students << u2
+c301.students << u3
+
 
 
 
