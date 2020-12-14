@@ -14,63 +14,93 @@ User.create!(:email => 'wworrell@colgate.edu', :admin => true)
 
 User.create!(:email => 'mmilke@colgate.edu', :admin => true)
 
+User.create!(:email => 'lshapiro1@colgate.edu', :admin => true)
+
 c101 = Course.create!(:name => 'COSC101S20', :daytime => 'TR 8:30-9:45')
 attendance101 = AttendanceQuestion.create!(:qname => "Attendance check in", :course => c101)
 
-c301 = Course.create!(:name => 'COSC301S20', :daytime => 'TR 9:55-11:10')
+c301 = Course.create!(:name => 'COSC301S20', :daytime => 'MWF 9:00-11:15')
 attendance301 = AttendanceQuestion.create!(:qname => "Attendance check in", :course => c301)
 
 #sommersmeister@gmail.com
-std101 = ['dingflag@gmail.com', 'wrequaw@gmail.com']
+std101 = ['dingflag@gmail.com', 'wrequaw@gmail.com', 'shapirolucass@gmail.com']
+
+u0 = User.create!(:email => 'dingflag@gmail.com')
+u1 = User.create!(:email => 'wrequaw@gmail.com')
+u2 = User.create!(:email => 'shapirolucass@gmail.com')
+c101.students << u0
+c101.students << u1
+c101.students << u2
+c301.students << u0
+c301.students << u1
+c301.students << u2
 
 
 
-puts "#{c101}"
-std101.each do |email|
-  std = User.create!(:email => email)
-  c101.students << std
-end
 
-exit
-
-puts "#{c301}"
-std301 = %w{
-}
-
-std301.each do |email|
-  std = User.create!(:email => email)
-  c301.students << std
-end
-
-
-
-exit
+#exit
 
 # dummy question seeds
 
 Question.new # force loading model code
 questions = []
-options = ["Syntax error", "Runtime error", "Logic error"]
-mc = MultiChoiceQuestion.create!(:qname => "What kind of error does this code exhibit?", :qcontent => options, :answer => "Logic error", :course => c)
-mcp = mc.new_poll(:round => 1)
-mcp.save!
-fr = FreeResponseQuestion.create!(:qname => "What does this image make you think of?", :course => c)
+fr = FreeResponseQuestion.create!(:qname => "What does this image make you think of?", :course => c301)
 fr.image.attach(io: File.open('testimg.png'), filename: 'testimg.png')
 frp = fr.new_poll(:round => 1)
 frp.save!
-num = NumericQuestion.create!(:qname => "What value does this function return?", :answer => 8, :course => c)
+num = NumericQuestion.create!(:qname => "What value does this function return?", :answer => 8, :course => c301, :created_at => "2020-11-15")
 nump = num.new_poll(:round => 1)
 nump.save!
+options = ["Syntax error", "Runtime error", "Logic error"]
+mc = MultiChoiceQuestion.create!(:qname => "What kind of error does this code exhibit?", :qcontent => options, :answer => "Logic error", :course => c301,:created_at => "2020-11-15")
+mcp = mc.new_poll(:round => 1)
+mcp.save!
+options = ["A", "B", "C", "D"]
+mc0 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[1], :course => c301,:created_at => "2020-11-15")
+mcp0 = mc0.new_poll(:round => 1)
+mcp0.save!
+mc1 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-11-17")
+mcp1 = mc1.new_poll(:round => 1)
+mcp1.save!
+mc2 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[3], :course => c301,:created_at => "2020-11-19")
+mcp2 = mc2.new_poll(:round => 1)
+mcp2.save!
+mc3 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-11-20")
+mcp3 = mc3.new_poll(:round => 1)
+mcp3.save!
+mc4 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[2], :course => c301,:created_at => "2020-11-20")
+mcp4 = mc4.new_poll(:round => 1)
+mcp4.save!
+mc5 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[0], :course => c301,:created_at => "2020-12-1")
+mcp5 = mc5.new_poll(:round => 1)
+mcp5.save!
+mc6 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[1], :course => c301,:created_at => "2020-12-1")
+mcp6 = mc6.new_poll(:round => 1)
+mcp6.save!
+mc7 = MultiChoiceQuestion.create!(:qname => "Which one?", :qcontent => options, :answer => options[2], :course => c301,:created_at => "2020-12-1")
+mcp7 = mc7.new_poll(:round => 1)
+mcp7.save!
+
 
 fr_resp = %w{this that other something nothing}
 
-# don't, by default, add dummy student seeds
-exit
+# generate results for us
+u_arr = [u0,u1,u2]
+answers_arr = [options[1],options[0],options[1],options[0],options[1],options[1],options[1],options[0]]
+mc_arr = [mcp0,mcp1,mcp2,mcp3,mcp4,mcp5,mcp6,mcp7]
+
+u_arr.each do |user|
+  answers_arr.zip(mc_arr).each do |answer, multichoicePoll|
+    r0 = multichoicePoll.new_response(:response => answer, :user => user)
+    r0.save!
+  end
+end
+
 
 slist = []
 1.upto(10) do |i|
   s = User.create!(:email => "fakestudent#{i}@colgate.edu")
-  c.students << s
+  c301.students << s
   slist << s
 
   r = mcp.new_response(:response => options[rand(3)], :user => s)
